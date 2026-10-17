@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<style>
+  :root {
+    --navy: #0D173B;
+    --navy-dark: #1A202C;
+    --navy-panel: #142050;
+    --teal: #4AB7E0;
+    --coral: #ED8936;
+    --line: rgba(74, 183, 224, .28);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--navy); }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%) fixed;
+  }
+  .wrap { width: min(1120px, 100% - 2rem); margin-inline: auto; padding-block: 1.25rem; }
+  .panel {
+    background: var(--navy-panel);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--teal);
+    border-radius: 8px;
+    min-height: calc(100vh - 2.5rem);
+    padding: 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  }
+  [hidden] { display: none !important; }
+  .panel .btn-kembali { align-self: flex-start; }
+  .btn {
+    display: inline-block; padding: .65rem 1.25rem; border-radius: 6px;
+    font: 600 1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    background: var(--coral); color: var(--navy-dark); text-decoration: none;
+    border: 0; cursor: pointer;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .btn.selesai { background: #4ADE80; color: #0D173B; }
+  .btn-kembali {
+    display: inline-block; padding: .5rem 1rem; border-radius: 6px;
+    background: none; cursor: pointer;
+    border: 1px solid var(--teal); color: var(--teal); text-decoration: none;
+    font: 600 .95rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  }
+  .daftar { list-style: none; padding: 0; width: min(560px, 100%); display: grid; gap: .75rem; color: #E8EEF7; }
+  .daftar li {
+    direction: rtl;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 6px;
+    background: rgba(13, 23, 59, .55);
+  }
+  .daftar li { cursor: pointer; user-select: none; transition: background .15s, border-color .15s; }
+  .daftar li.hijau { background: rgba(72, 187, 120, .28); border-color: #48BB78; }
+  .skor { font: 700 1.5rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif; color: #E8EEF7; direction: ltr; }
+  .skor.penuh { color: #68D391; }
+  .isi { width: min(560px, 100%); display: grid; gap: .75rem; }
+  .judul { font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Geeza Pro", serif; font-size: 1.35rem; font-weight: 700; color: var(--teal); margin-top: .5rem; }
+  .arab { font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Geeza Pro", serif; font-size: 1.75rem; line-height: 1.8; direction: rtl; }
+  .arti { font: 1rem/1.5 "Avenir Next", "Segoe UI", system-ui, sans-serif; color: #9AA8C7; direction: ltr; text-align: left; }
+  .btn-kembali:hover { background: rgba(74, 183, 224, .12); }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="panel" id="menu">
+    <a class="btn-kembali" href="arab.html">Kembali</a>
+    <button type="button" class="btn" id="buka">Hari 1</button>
+  </section>
+  <section class="panel" id="hari-1" hidden>
+    <button type="button" class="btn-kembali" id="kembali">Kembali</button>
+    <div class="skor" id="skor" aria-live="polite">0/10</div>
+    <div class="isi">
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأسماء</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">لُعَابٌ</span><span class="arti">air liur</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">حَاجِبٌ جـ حَوَاجِبٌ</span><span class="arti">alis</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">جِسْمٌ جـ أَجْسَامٌ</span><span class="arti">badan</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">كَتِفٌ جـ أَكْتَافٌ</span><span class="arti">bahu</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">سَاقٌ جـ سُوَقٌ</span><span class="arti">betis</span></li>
+      </ul>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأفعال</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِنْهَارَ – يَنْهَارُ</span><span class="arti">ambruk</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">سَعِدَ – يَسْعَدُ</span><span class="arti">bahagia</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِفْتَخَرَ – يَفْتَخِرُ</span><span class="arti">bangga</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">نَهَضَ – يَنْهَضُ</span><span class="arti">bangkit</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَأَدَّبَ – يَتَأَدَّبُ</span><span class="arti">beradab</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+  var menu = document.getElementById('menu');
+  var isi = document.getElementById('hari-1');
+  document.getElementById('buka').addEventListener('click', function () {
+    menu.hidden = true; isi.hidden = false; window.scrollTo(0, 0);
+  });
+  document.getElementById('kembali').addEventListener('click', function () {
+    isi.hidden = true; menu.hidden = false; window.scrollTo(0, 0);
+  });
+  var barisan = document.querySelectorAll('.daftar li');
+  var skor = document.getElementById('skor');
+  function hitung() {
+    var n = document.querySelectorAll('.daftar li.hijau').length;
+    skor.textContent = n + '/' + barisan.length;
+    skor.classList.toggle('penuh', n === barisan.length);
+    document.getElementById('buka').classList.toggle('selesai', n === barisan.length);
+  }
+  function ganti(li) {
+    var on = li.classList.toggle('hijau');
+    li.setAttribute('aria-pressed', on ? 'true' : 'false');
+    hitung();
+  }
+  barisan.forEach(function (li) {
+    li.addEventListener('click', function () { ganti(li); });
+    li.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ganti(li); }
+    });
+  });
+</script>
+</body>
+</html>

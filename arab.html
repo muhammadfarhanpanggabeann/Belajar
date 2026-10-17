@@ -29,7 +29,8 @@
   }
   .panel-menu { min-height: 72px; padding: 1rem; display: flex; align-items: center; justify-content: center; }
   [hidden] { display: none !important; }
-  .panel-isi { min-height: calc(100vh - 2.5rem); padding: 1rem; }
+  .panel-isi { min-height: calc(100vh - 2.5rem); padding: 1rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .panel-isi .btn-kembali { align-self: flex-start; }
   .btn-kembali {
     display: inline-block; padding: .5rem 1rem; border-radius: 6px; cursor: pointer;
     background: none; border: 1px solid var(--teal); color: var(--teal); text-decoration: none;
@@ -54,6 +55,7 @@
   </section>
   <section class="panel panel-isi" id="tingkat-1" hidden>
     <button type="button" class="btn-kembali" id="kembali">Kembali</button>
+    <a class="btn" href="mufradat-1.html">Mufradat</a>
   </section>
 </main>
 <script>
