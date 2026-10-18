@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bahasa Arab</title>
+<style>
+  :root {
+    --navy: #0D173B;
+    --navy-dark: #1A202C;
+    --navy-panel: #142050;
+    --teal: #4AB7E0;
+    --coral: #ED8936;
+    --line: rgba(74, 183, 224, .28);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--navy); }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%) fixed;
+  }
+  .wrap { width: min(1120px, 100% - 2rem); margin-inline: auto; padding-block: 1.25rem; }
+  .panel {
+    background: var(--navy-panel);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--teal);
+    border-radius: 8px;
+    min-height: 72px; padding: 1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .btn {
+    display: inline-block; padding: .65rem 1.25rem; border-radius: 6px;
+    font: 600 1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    background: var(--coral); color: var(--navy-dark); text-decoration: none;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="panel">
+    <a class="btn" href="tingkat-1/">Tingkat 1</a>
+  </section>
+</main>
+</body>
+</html>
