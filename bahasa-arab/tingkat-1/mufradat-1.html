@@ -48,7 +48,7 @@
   .daftar { list-style: none; padding: 0; width: min(560px, 100%); display: grid; gap: .75rem; color: #E8EEF7; }
   .daftar li {
     direction: rtl;
-    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
     padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 6px;
     background: rgba(13, 23, 59, .55);
   }
@@ -63,83 +63,238 @@
     font: 600 .9rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
   }
   .alat button:hover { background: rgba(74, 183, 224, .12); }
-  .tutup-arab .arab, .tutup-indo .arti { visibility: hidden; }
+  .alat button[aria-pressed="true"] { background: rgba(74, 183, 224, .22); }
+  .tutup-arab .arab, .tutup-arab .kal-ar, .tutup-indo .arti, .tutup-indo .terj { visibility: hidden; }
   .isi { width: min(560px, 100%); display: grid; gap: .75rem; }
   .judul { font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Geeza Pro", serif; font-size: 1.35rem; font-weight: 700; color: var(--teal); margin-top: .5rem; }
   .arab { font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Geeza Pro", serif; font-size: 1.75rem; line-height: 1.8; direction: rtl; }
   .arti { font: 1rem/1.5 "Avenir Next", "Segoe UI", system-ui, sans-serif; color: #9AA8C7; direction: ltr; text-align: left; }
   .btn-kembali:hover { background: rgba(74, 183, 224, .12); }
   :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+  #menu .btn { min-width: 8rem; }
+  #menu { align-items: center; }
+
+  /* Jumlah mufidah */
+  .jumlah, .legenda { display: none; }
+  .tampil-jumlah .jumlah {
+    display: grid; flex-basis: 100%; gap: .4rem;
+    padding-top: .75rem; border-top: 1px dashed var(--line);
+  }
+  .tampil-jumlah .legenda {
+    display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;
+    font: .85rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif; color: #9AA8C7;
+  }
+  .legenda i { display: inline-block; width: .8rem; height: .8rem; border-radius: 2px; margin-right: .4rem; vertical-align: -1px; }
+  .legenda i.a { background: var(--teal); }
+  .legenda i.b { background: var(--coral); }
+  .kal {
+    display: grid; gap: .05rem;
+    padding: .2rem .75rem; border-inline-start: 3px solid; border-radius: 3px;
+  }
+  .kal.a { border-color: var(--teal); background: rgba(74, 183, 224, .08); }
+  .kal.b { border-color: var(--coral); background: rgba(237, 137, 54, .08); }
+  .kal-ar {
+    font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Geeza Pro", serif;
+    font-size: 1.2rem; line-height: 1.9; color: #E8EEF7;
+  }
+  .terj {
+    font: .85rem/1.5 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: #9AA8C7; direction: ltr; text-align: left;
+  }
 </style>
 </head>
 <body>
 <main class="wrap">
   <section class="panel" id="menu">
     <a class="btn-kembali" href="./">Kembali</a>
-    <button type="button" class="btn" id="buka">Hari 1</button>
+    <button type="button" class="btn" id="buka-hari-1">Hari 1</button>
+    <button type="button" class="btn" id="buka-hari-2">Hari 2</button>
   </section>
-  <section class="panel" id="hari-1" hidden>
-    <button type="button" class="btn-kembali" id="kembali">Kembali</button>
-    <div class="skor" id="skor" aria-live="polite">0/10</div>
+  <section class="panel hari" id="hari-1" data-tombol="buka-hari-1" hidden>
+    <button type="button" class="btn-kembali kembali">Kembali</button>
+    <div class="skor" aria-live="polite">0/10</div>
     <div class="alat">
-      <button type="button" id="mode">Semua</button>
+      <button type="button" class="mode">Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Kalimat</button>
     </div>
     <div class="isi">
+      <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
       <h2 class="judul" lang="ar" dir="rtl">قسم الأسماء</h2>
       <ul class="daftar">
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">لُعَابٌ</span><span class="arti">air liur</span></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">حَاجِبٌ جـ حَوَاجِبٌ</span><span class="arti">alis</span></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">جِسْمٌ جـ أَجْسَامٌ</span><span class="arti">badan</span></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">كَتِفٌ جـ أَكْتَافٌ</span><span class="arti">bahu</span></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">سَاقٌ جـ سُوَقٌ</span><span class="arti">betis</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">لُعَابٌ</span><span class="arti">air liur</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">سَالَ لُعَابُ الطِّفْلِ عَلَى الْوِسَادَةِ.</span><span class="terj" lang="id" dir="ltr">Air liur anak itu menetes ke bantal.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">حَاجِبٌ جـ حَوَاجِبٌ</span><span class="arti">alis</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">لِلرَّجُلِ حَاجِبٌ كَثِيفٌ.</span><span class="terj" lang="id" dir="ltr">Lelaki itu punya alis yang tebal.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">هَلِ الْحَوَاجِبُ طَوِيلَةٌ؟</span><span class="terj" lang="id" dir="ltr">Apakah alis-alis itu panjang?</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">جِسْمٌ جـ أَجْسَامٌ</span><span class="arti">badan</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">جِسْمُ الْأَسَدِ كَبِيرٌ.</span><span class="terj" lang="id" dir="ltr">Badan singa itu besar.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">الرِّيَاضَةُ مُفِيدَةٌ لِلْأَجْسَامِ.</span><span class="terj" lang="id" dir="ltr">Olahraga bermanfaat bagi badan.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">كَتِفٌ جـ أَكْتَافٌ</span><span class="arti">bahu</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">وَضَعَ الْأَبُ يَدَهُ عَلَى كَتِفِي.</span><span class="terj" lang="id" dir="ltr">Ayah meletakkan tangannya di bahuku.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">عَلَى أَكْتَافِ الْجُنُودِ نُجُومٌ.</span><span class="terj" lang="id" dir="ltr">Di bahu para prajurit ada bintang-bintang.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">سَاقٌ جـ سُوْقٌ</span><span class="arti">betis</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">فِي سَاقِي أَلَمٌ.</span><span class="terj" lang="id" dir="ltr">Ada rasa sakit di betisku.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">سُوْقُ الْعَدَّائِينَ قَوِيَّةٌ.</span><span class="terj" lang="id" dir="ltr">Betis para pelari kuat.</span></div>
+          </div></li>
       </ul>
       <h2 class="judul" lang="ar" dir="rtl">قسم الأفعال</h2>
       <ul class="daftar">
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِنْهَارَ – يَنْهَارُ</span><span class="arti">ambruk</span></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">سَعِدَ – يَسْعَدُ</span><span class="arti">bahagia</span></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِفْتَخَرَ – يَفْتَخِرُ</span><span class="arti">bangga</span></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">نَهَضَ – يَنْهَضُ</span><span class="arti">bangkit</span></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَأَدَّبَ – يَتَأَدَّبُ</span><span class="arti">beradab</span></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِنْهَارَ – يَنْهَارُ</span><span class="arti">ambruk</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">اِنْهَارَ الْجِدَارُ بَعْدَ الْمَطَرِ.</span><span class="terj" lang="id" dir="ltr">Dinding itu ambruk setelah hujan.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">لَنْ يَنْهَارَ الْجِسْرُ.</span><span class="terj" lang="id" dir="ltr">Jembatan itu tidak akan ambruk.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">سَعِدَ – يَسْعَدُ</span><span class="arti">bahagia</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">سَعِدْتُ بِلِقَائِكَ.</span><span class="terj" lang="id" dir="ltr">Aku bahagia bertemu denganmu.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">هَلْ تَسْعَدُ بِالنَّجَاحِ؟</span><span class="terj" lang="id" dir="ltr">Apakah kamu bahagia dengan kesuksesan?</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِفْتَخَرَ – يَفْتَخِرُ</span><span class="arti">bangga</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">اِفْتَخَرْنَا بِوَطَنِنَا.</span><span class="terj" lang="id" dir="ltr">Kami bangga pada tanah air kami.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَفْتَخِرُ الْمُعَلِّمُ بِطُلَّابِهِ.</span><span class="terj" lang="id" dir="ltr">Guru itu bangga pada murid-muridnya.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">نَهَضَ – يَنْهَضُ</span><span class="arti">bangkit</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">نَهَضَ الْوَلَدُ مُبَكِّرًا.</span><span class="terj" lang="id" dir="ltr">Anak itu bangkit lebih awal.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">أَنْهَضُ كُلَّ يَوْمٍ قَبْلَ الْفَجْرِ.</span><span class="terj" lang="id" dir="ltr">Aku bangkit setiap hari sebelum subuh.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَأَدَّبَ – يَتَأَدَّبُ</span><span class="arti">beradab</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَأَدَّبَ التِّلْمِيذُ أَمَامَ الْمُدِيرِ.</span><span class="terj" lang="id" dir="ltr">Murid itu bersikap sopan di hadapan kepala sekolah.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَأَدَّبُ الطُّلَّابُ فِي الْمَسْجِدِ.</span><span class="terj" lang="id" dir="ltr">Para siswa bersikap sopan di masjid.</span></div>
+          </div></li>
+      </ul>
+    </div>
+  </section>
+  <section class="panel hari" id="hari-2" data-tombol="buka-hari-2" hidden>
+    <button type="button" class="btn-kembali kembali">Kembali</button>
+    <div class="skor" aria-live="polite">0/10</div>
+    <div class="alat">
+      <button type="button" class="mode">Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Kalimat</button>
+    </div>
+    <div class="isi">
+      <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأسماء</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">شَفَّةٌ جـ شِفَاهٌ</span><span class="arti">bibir</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">الشَّفَةُ الْعُلْيَا لِلطِّفْلِ صَغِيرَةٌ.</span><span class="terj" lang="id" dir="ltr">Bibir atas anak itu kecil.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">جَفَّتْ شِفَاهُ الْمُسَافِرِ مِنَ الْعَطَشِ.</span><span class="terj" lang="id" dir="ltr">Bibir musafir itu kering karena haus.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">هُدْبٌ جـ أَهْدَابٌ</span><span class="arti">bulu mata</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">هُدْبُ الْجَمَلِ طَوِيلٌ.</span><span class="terj" lang="id" dir="ltr">Bulu mata unta itu panjang.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">هَلْ أَهْدَابُ الْبِنْتِ سَوْدَاءُ؟</span><span class="terj" lang="id" dir="ltr">Apakah bulu mata gadis itu hitam?</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">مُقْلَةٌ جـ مُقَلٌ</span><span class="arti">bola mata</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">مُقْلَةُ الطِّفْلِ سَلِيمَةٌ.</span><span class="terj" lang="id" dir="ltr">Bola mata anak itu sehat.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">فَحَصَ الطَّبِيبُ مُقَلَ الْمَرْضَى.</span><span class="terj" lang="id" dir="ltr">Dokter memeriksa bola mata para pasien.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">لَحْمٌ جـ لُحُوْمٌ</span><span class="arti">daging</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">أَكَلَ الضَّيْفُ اللَّحْمَ.</span><span class="terj" lang="id" dir="ltr">Tamu itu makan daging.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">هَلْ تُحِبُّ لُحُوْمَ الْأَبْقَارِ؟</span><span class="terj" lang="id" dir="ltr">Apakah kamu suka daging sapi?</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">صَدْرٌ جـ صُدُوْرٌ</span><span class="arti">dada</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">وَضَعَ الْمُصَلِّي يَدَيْهِ عَلَى صَدْرِهِ.</span><span class="terj" lang="id" dir="ltr">Orang yang shalat itu meletakkan kedua tangannya di dadanya.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">صُدُوْرُ الْجُنُودِ عَرِيضَةٌ.</span><span class="terj" lang="id" dir="ltr">Dada para prajurit lebar.</span></div>
+          </div></li>
+      </ul>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأفعال</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَكَيَّفَ – يَتَكَيَّفُ</span><span class="arti">beradaptasi</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَكَيَّفَ الطَّالِبُ الْجَدِيدُ مَعَ الْمَدْرَسَةِ.</span><span class="terj" lang="id" dir="ltr">Siswa baru itu beradaptasi dengan sekolah.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">هَلْ تَتَكَيَّفُ مَعَ الطَّقْسِ الْبَارِدِ؟</span><span class="terj" lang="id" dir="ltr">Apakah kamu beradaptasi dengan cuaca dingin?</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَنَوَّعَ – يَتَنَوَّعُ</span><span class="arti">beragam</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَنَوَّعَتِ الْأَطْعِمَةُ فِي السُّوقِ.</span><span class="terj" lang="id" dir="ltr">Makanan di pasar beragam.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَنَوَّعُ الطَّعَامُ فِي بَلَدِنَا.</span><span class="terj" lang="id" dir="ltr">Makanan di negeri kami beragam.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَغَوَّطَ – يَتَغَوَّطُ</span><span class="arti">buang air besar</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَغَوَّطَ الطِّفْلُ فِي الْمِرْحَاضِ.</span><span class="terj" lang="id" dir="ltr">Anak itu buang air besar di toilet.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَغَوَّطُ الطِّفْلُ كُلَّ صَبَاحٍ.</span><span class="terj" lang="id" dir="ltr">Anak itu buang air besar setiap pagi.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِنْطَلَقَ – يَنْطَلِقُ</span><span class="arti">berangkat</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">اِنْطَلَقَتِ الْحَافِلَةُ مِنَ الْمَحَطَّةِ.</span><span class="terj" lang="id" dir="ltr">Bus itu berangkat dari terminal.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَنْطَلِقُ الْقِطَارُ بَعْدَ سَاعَةٍ.</span><span class="terj" lang="id" dir="ltr">Kereta berangkat satu jam lagi.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">شَجُعَ – يَشْجُعُ</span><span class="arti">berani</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">شَجُعَ الْجُنْدِيُّ أَمَامَ الْعَدُوِّ.</span><span class="terj" lang="id" dir="ltr">Prajurit itu berani di hadapan musuh.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">هَلْ يَشْجُعُ الْوَلَدُ عِنْدَ الْخَطَرِ؟</span><span class="terj" lang="id" dir="ltr">Apakah anak itu berani saat bahaya?</span></div>
+          </div></li>
       </ul>
     </div>
   </section>
 </main>
 <script>
   var menu = document.getElementById('menu');
-  var isi = document.getElementById('hari-1');
-  document.getElementById('buka').addEventListener('click', function () {
-    menu.hidden = true; isi.hidden = false; window.scrollTo(0, 0);
-  });
-  document.getElementById('kembali').addEventListener('click', function () {
-    isi.hidden = true; menu.hidden = false; window.scrollTo(0, 0);
-  });
-  var barisan = document.querySelectorAll('.daftar li');
-  var skor = document.getElementById('skor');
-  function hitung() {
-    var n = document.querySelectorAll('.daftar li.hijau').length;
-    skor.textContent = n + '/' + barisan.length;
-    skor.classList.toggle('penuh', n === barisan.length);
-    document.getElementById('buka').classList.toggle('selesai', n === barisan.length);
-  }
-  function ganti(li) {
-    var on = li.classList.toggle('hijau');
-    li.setAttribute('aria-pressed', on ? 'true' : 'false');
-    hitung();
-  }
-  barisan.forEach(function (li) {
-    li.addEventListener('click', function () { ganti(li); });
-    li.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ganti(li); }
-    });
-  });
-  var mode = document.getElementById('mode');
   var urutan = [['', 'Semua'], ['tutup-arab', 'Tanpa Arab'], ['tutup-indo', 'Tanpa Indo']];
-  var no = 0;
-  mode.addEventListener('click', function () {
-    isi.classList.remove('tutup-arab', 'tutup-indo');
-    no = (no + 1) % urutan.length;
-    if (urutan[no][0]) isi.classList.add(urutan[no][0]);
-    mode.textContent = urutan[no][1];
+
+  document.querySelectorAll('.hari').forEach(function (hari) {
+    var tombol = document.getElementById(hari.dataset.tombol);
+    var isi = hari.querySelector('.isi');
+    var skor = hari.querySelector('.skor');
+    var mode = hari.querySelector('.mode');
+    var tombolJumlah = hari.querySelector('.tombol-jumlah');
+    var barisan = hari.querySelectorAll('.daftar li');
+    var no = 0;
+
+    tombol.addEventListener('click', function () {
+      menu.hidden = true; hari.hidden = false; window.scrollTo(0, 0);
+    });
+    hari.querySelector('.kembali').addEventListener('click', function () {
+      hari.hidden = true; menu.hidden = false; window.scrollTo(0, 0);
+    });
+
+    function hitung() {
+      var n = hari.querySelectorAll('.daftar li.hijau').length;
+      skor.textContent = n + '/' + barisan.length;
+      skor.classList.toggle('penuh', n === barisan.length);
+      tombol.classList.toggle('selesai', n === barisan.length);
+    }
+    function ganti(li) {
+      var on = li.classList.toggle('hijau');
+      li.setAttribute('aria-pressed', on ? 'true' : 'false');
+      hitung();
+    }
+    barisan.forEach(function (li) {
+      li.addEventListener('click', function () { ganti(li); });
+      li.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ganti(li); }
+      });
+    });
+
+    mode.addEventListener('click', function () {
+      isi.classList.remove('tutup-arab', 'tutup-indo');
+      no = (no + 1) % urutan.length;
+      if (urutan[no][0]) isi.classList.add(urutan[no][0]);
+      mode.textContent = urutan[no][1];
+    });
+
+    if (tombolJumlah) {
+      tombolJumlah.addEventListener('click', function () {
+        var on = isi.classList.toggle('tampil-jumlah');
+        tombolJumlah.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
   });
 </script>
 </body>
