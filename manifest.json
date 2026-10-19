@@ -1,0 +1,17 @@
+{
+  "name": "Bahasa Arab",
+  "short_name": "Bahasa Arab",
+  "description": "Belajar Bahasa Arab",
+  "lang": "id",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0D173B",
+  "theme_color": "#0D173B",
+  "icons": [
+    { "src": "ikon-buku-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "ikon-buku-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "ikon-buku-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
