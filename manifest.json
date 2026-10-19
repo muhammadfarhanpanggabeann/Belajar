@@ -1,7 +1,7 @@
 {
-  "name": "Bahasa Arab",
-  "short_name": "Bahasa Arab",
-  "description": "Belajar Bahasa Arab",
+  "name": "Belajar",
+  "short_name": "Belajar",
+  "description": "Aplikasi belajar",
   "lang": "id",
   "start_url": "./index.html",
   "scope": "./",

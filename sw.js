@@ -1,4 +1,4 @@
-const CACHE = 'bahasa-arab-v1';
+const CACHE = 'belajar-v2';
 const CORE = ['./', './index.html', './manifest.json', './ikon-buku-192.png', './ikon-buku-512.png'];
 
 self.addEventListener('install', e => {
