@@ -110,47 +110,101 @@
     color: #9AA8C7; text-align: center; max-width: 12rem;
   }
   .kuis-wrap {
-    width: min(560px, 100%); display: grid; gap: .75rem; margin-top: .5rem;
-    padding-top: 1rem; border-top: 1px dashed var(--line);
+    width: min(560px, 100%); display: grid; gap: .85rem; margin-top: .75rem;
+    padding-top: 1.25rem; border-top: 1px solid var(--line);
   }
-  .kuis { display: grid; gap: .6rem; justify-items: center; text-align: center; }
-  .kuis-progress { color: #9AA8C7; font: .85rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif; }
+  .kuis-wrap > .btn { width: 100%; border-radius: 10px; padding: .85rem 1.25rem; }
+  .kuis-wrap > .btn:not(.btn-tambahan) { box-shadow: 0 8px 20px -10px rgba(237, 137, 54, .8); }
+  .btn.btn-tambahan {
+    background: transparent; border: 1.5px solid rgba(237, 137, 54, .7); color: var(--coral); box-shadow: none;
+  }
+  .btn.btn-tambahan:hover { background: rgba(237, 137, 54, .1); filter: none; }
+
+  .kuis {
+    display: grid; gap: .9rem; justify-items: center; text-align: center;
+    padding: 1.25rem 1rem 1rem; border: 1px solid var(--line); border-radius: 14px;
+    background: linear-gradient(180deg, rgba(74, 183, 224, .07), rgba(13, 23, 59, .35));
+  }
+  .kuis .btn { width: 100%; border-radius: 10px; padding: .8rem 1.25rem; }
+  .kuis-progress {
+    width: 100%; display: grid; gap: .55rem;
+    color: #9AA8C7; font: 600 .8rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif; letter-spacing: .04em;
+  }
+  .kuis-progress::after {
+    content: ""; height: 4px; border-radius: 99px;
+    background: linear-gradient(90deg, var(--teal) var(--p, 0%), rgba(74, 183, 224, .18) var(--p, 0%));
+  }
   .kuis-soal {
-    font-size: 2.3rem; line-height: 2.2; color: #FFFFFF;
-    padding: .5rem .75rem; letter-spacing: .02em;
-    background: rgba(74, 183, 224, .08); border-radius: 6px;
-    width: 100%;
+    position: relative; width: 100%;
+    font-size: 2.4rem; line-height: 2; color: #FFFFFF; letter-spacing: .02em;
+    padding: 1.7rem .75rem .9rem; border-radius: 12px;
+    background: rgba(13, 23, 59, .6); border: 1px solid var(--line);
   }
+  .kuis-soal::before {
+    position: absolute; top: .6rem; left: 0; right: 0; text-align: center; direction: ltr;
+    font: 600 .72rem/1 "Avenir Next", "Segoe UI", system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--teal);
+  }
+  .kuis-soal.arab::before { content: "Apa artinya?"; }
+  .kuis-soal.indo { font: 700 1.6rem/1.6 "Avenir Next", "Segoe UI", system-ui, sans-serif; direction: ltr; padding-top: 1.9rem; }
+  .kuis-soal.indo::before { content: "Tulis dalam bahasa Arab"; }
+
   .kuis-input {
-    width: 100%; padding: .65rem .9rem; border-radius: 6px;
-    border: 1px solid var(--line); background: rgba(13, 23, 59, .55);
+    width: 100%; padding: .8rem 1rem; border-radius: 10px;
+    border: 1.5px solid var(--line); background: rgba(13, 23, 59, .7);
     color: #E8EEF7; font: 1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    transition: border-color .15s, box-shadow .15s, background .15s;
   }
-  .kuis-input:focus-visible { outline: 3px solid var(--teal); outline-offset: 1px; }
-  .kuis-input.benar { border-color: #48BB78; }
-  .kuis-input.salah { border-color: #F56565; }
+  .kuis-input::placeholder { color: rgba(154, 168, 199, .6); font: .9rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif; }
+  .kuis-input:focus-visible {
+    outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(74, 183, 224, .25);
+  }
+  .kuis-input.ar {
+    font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Geeza Pro", serif;
+    font-size: 1.7rem; line-height: 1.8; direction: rtl; text-align: center;
+  }
+  .kuis-input.ar::placeholder { font: .9rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif; }
+  .kuis-input.benar { border-color: #48BB78; background: rgba(72, 187, 120, .1); }
+  .kuis-input.salah { border-color: #F56565; background: rgba(245, 101, 101, .1); }
+
   .kuis-feedback {
-    width: 100%; padding: .55rem .8rem; border-radius: 6px;
-    font: 600 .95rem/1.5 "Avenir Next", "Segoe UI", system-ui, sans-serif;
-    text-align: center;
+    width: 100%; padding: .7rem .9rem; border-radius: 10px; border: 1px solid transparent;
+    font: 600 .95rem/1.5 "Avenir Next", "Segoe UI", system-ui, sans-serif; text-align: center; animation: naik .18s ease-out;
   }
-  .kuis-feedback.benar { background: rgba(72, 187, 120, .18); color: #68D391; }
-  .kuis-feedback.salah { background: rgba(245, 101, 101, .18); color: #FC8181; }
+  .kuis-feedback.benar { background: rgba(72, 187, 120, .14); border-color: rgba(72, 187, 120, .45); color: #68D391; }
+  .kuis-feedback.salah { background: rgba(245, 101, 101, .14); border-color: rgba(245, 101, 101, .45); color: #FC8181; }
+  @keyframes naik { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .kuis-feedback { animation: none; } }
+
+  .kuis .kuis-batal {
+    border: 0; background: none; color: #9AA8C7; font-weight: 500; padding: .25rem .5rem;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  .kuis .kuis-batal:hover { color: #E8EEF7; background: none; }
+
   .kuis-hasil {
-    color: #E8EEF7; text-align: center;
-    font: .95rem/1.6 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    padding: 1rem; border: 1px solid var(--line); border-radius: 14px;
+    background: rgba(13, 23, 59, .45);
+    color: #E8EEF7; text-align: center; font: .95rem/1.6 "Avenir Next", "Segoe UI", system-ui, sans-serif;
   }
-  .kuis-rekap-list { display: grid; gap: .4rem; margin-top: .85rem; text-align: left; }
+  .kuis-rekap-list { display: grid; gap: .45rem; margin-top: 1rem; text-align: left; }
   .kuis-rekap {
-    padding: .5rem .75rem; border-radius: 6px;
-    font: .88rem/1.6 "Avenir Next", "Segoe UI", system-ui, sans-serif;
-    color: #E8EEF7;
+    padding: .6rem .85rem; border-radius: 10px;
+    font: .88rem/1.7 "Avenir Next", "Segoe UI", system-ui, sans-serif; color: #E8EEF7;
   }
-  .kuis-rekap .arab {
-    font-size: 1.1rem; line-height: 1.5;
-  }
+  .kuis-rekap .arab { font-size: 1.2rem; line-height: 1.6; }
   .kuis-rekap.benar { background: rgba(72, 187, 120, .12); border-inline-start: 3px solid #48BB78; }
   .kuis-rekap.salah { background: rgba(245, 101, 101, .12); border-inline-start: 3px solid #F56565; }
+
+  /* Tombol suara */
+  .tombol-suara {
+    position: fixed; right: 1rem; bottom: 1rem; z-index: 20;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    display: grid; place-items: center; font-size: 1.15rem; line-height: 1;
+    background: var(--navy-panel); border: 1px solid var(--teal); color: #E8EEF7;
+    box-shadow: 0 6px 18px -8px rgba(0, 0, 0, .7);
+  }
+  .tombol-suara:hover { background: #1B2A66; }
+  .tombol-suara[aria-pressed="false"] { opacity: .65; border-color: var(--line); }
 </style>
 </head>
 <body>
@@ -160,11 +214,11 @@
     <button type="button" class="btn" id="buka-hari-1">Hari 1</button>
     <div class="item-menu">
       <button type="button" class="btn" id="buka-hari-2">Hari 2</button>
-      <p class="catatan-kunci" id="catatan-hari-2" hidden>🔒 Selesaikan kuis Hari 1 dulu</p>
+      <p class="catatan-kunci" id="catatan-hari-2" hidden>🔒 Selesaikan kedua kuis Hari 1 dulu</p>
     </div>
     <div class="item-menu">
       <button type="button" class="btn" id="buka-hari-3">Hari 3</button>
-      <p class="catatan-kunci" id="catatan-hari-3" hidden>🔒 Selesaikan kuis Hari 2 dulu</p>
+      <p class="catatan-kunci" id="catatan-hari-3" hidden>🔒 Selesaikan kedua kuis Hari 2 dulu</p>
     </div>
   </section>
   <section class="panel hari" id="hari-1" data-tombol="buka-hari-1" hidden>
@@ -233,7 +287,7 @@
       </ul>
     </div>
     <div class="kuis-wrap">
-      <button type="button" class="btn mulai-kuis">Mulai Kuis (wajib untuk membuka hari berikutnya)</button>
+      <button type="button" class="btn mulai-kuis">Mulai Kuis Arab → Indonesia (wajib)</button>
       <div class="kuis" hidden>
         <div class="kuis-progress"></div>
         <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
@@ -312,7 +366,7 @@
       </ul>
     </div>
     <div class="kuis-wrap">
-      <button type="button" class="btn mulai-kuis">Mulai Kuis (wajib untuk membuka hari berikutnya)</button>
+      <button type="button" class="btn mulai-kuis">Mulai Kuis Arab → Indonesia (wajib)</button>
       <div class="kuis" hidden>
         <div class="kuis-progress"></div>
         <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
@@ -389,7 +443,7 @@
       </ul>
     </div>
     <div class="kuis-wrap">
-      <button type="button" class="btn mulai-kuis">Mulai Kuis (wajib untuk membuka hari berikutnya)</button>
+      <button type="button" class="btn mulai-kuis">Mulai Kuis Arab → Indonesia (wajib)</button>
       <div class="kuis" hidden>
         <div class="kuis-progress"></div>
         <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
@@ -412,6 +466,10 @@
   function sudahLulus(id) {
     return localStorage.getItem(kunciPrefix(id)) === '1';
   }
+  function sudahLulus2(id) {
+    return localStorage.getItem(kunciPrefix(id) + '-indoarab') === '1';
+  }
+  function sudahLengkap(id) { return sudahLulus(id) && sudahLulus2(id); }
 
   function perbaruiKunci() {
     urutanHari.forEach(function (id, i) {
@@ -419,7 +477,7 @@
       if (!tombol) return;
       if (i === 0) { tombol.disabled = false; return; }
       var prasyarat = urutanHari[i - 1];
-      var terbuka = sudahLulus(prasyarat);
+      var terbuka = sudahLengkap(prasyarat);
       tombol.disabled = !terbuka;
       var catatan = document.getElementById('catatan-' + id);
       if (catatan) catatan.hidden = terbuka;
@@ -447,6 +505,77 @@
     return varian.indexOf(normalisasi(jawaban)) !== -1;
   }
 
+
+  // Efek suara (disintesis dengan Web Audio, tanpa file audio)
+  var suaraAktif = true;
+  try { suaraAktif = localStorage.getItem('mufradat-suara') !== '0'; } catch (e) {}
+  var ctxAudio = null;
+
+  function ambilAudio() {
+    if (!ctxAudio) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      try { ctxAudio = new AC(); } catch (e) { return null; }
+    }
+    if (ctxAudio.state === 'suspended') ctxAudio.resume();
+    return ctxAudio;
+  }
+
+  function nada(c, frek, mulai, durasi, tipe, vol) {
+    var osc = c.createOscillator();
+    var gain = c.createGain();
+    osc.type = tipe;
+    osc.frequency.setValueAtTime(frek, mulai);
+    gain.gain.setValueAtTime(0.0001, mulai);
+    gain.gain.exponentialRampToValueAtTime(vol, mulai + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, mulai + durasi);
+    osc.connect(gain); gain.connect(c.destination);
+    osc.start(mulai); osc.stop(mulai + durasi + 0.05);
+  }
+
+  function bunyi(jenis) {
+    if (!suaraAktif) return;
+    var c = ambilAudio();
+    if (!c) return;
+    var t = c.currentTime + 0.02;
+    if (jenis === 'benar') {
+      nada(c, 659.25, t, 0.16, 'sine', 0.2);
+      nada(c, 987.77, t + 0.1, 0.28, 'sine', 0.2);
+    } else if (jenis === 'salah') {
+      nada(c, 233.08, t, 0.2, 'triangle', 0.22);
+      nada(c, 174.61, t + 0.15, 0.32, 'triangle', 0.22);
+    } else if (jenis === 'lulus') {
+      [523.25, 659.25, 783.99, 1046.5].forEach(function (f, i) {
+        nada(c, f, t + i * 0.11, i === 3 ? 0.5 : 0.2, 'sine', 0.2);
+      });
+    } else if (jenis === 'gagal') {
+      [392, 329.63, 261.63].forEach(function (f, i) {
+        nada(c, f, t + i * 0.14, 0.28, 'triangle', 0.18);
+      });
+    } else if (jenis === 'centang') {
+      nada(c, 740, t, 0.09, 'sine', 0.1);
+    }
+  }
+
+  (function () {
+    var tombolSuara = document.createElement('button');
+    tombolSuara.type = 'button';
+    tombolSuara.className = 'tombol-suara';
+    function segarkan() {
+      tombolSuara.textContent = suaraAktif ? '🔊' : '🔇';
+      tombolSuara.setAttribute('aria-pressed', suaraAktif ? 'true' : 'false');
+      tombolSuara.setAttribute('aria-label', suaraAktif ? 'Matikan suara' : 'Nyalakan suara');
+    }
+    tombolSuara.addEventListener('click', function () {
+      suaraAktif = !suaraAktif;
+      try { localStorage.setItem('mufradat-suara', suaraAktif ? '1' : '0'); } catch (e) {}
+      segarkan();
+      if (suaraAktif) bunyi('benar');
+    });
+    segarkan();
+    document.body.appendChild(tombolSuara);
+  })();
+
   document.querySelectorAll('.hari').forEach(function (hari) {
     var tombol = document.getElementById(hari.dataset.tombol);
     var isi = hari.querySelector('.isi');
@@ -471,6 +600,7 @@
     }
     function ganti(li) {
       var on = li.classList.toggle('hijau');
+      if (on) bunyi('centang');
       li.setAttribute('aria-pressed', on ? 'true' : 'false');
       hitung();
     }
@@ -516,7 +646,7 @@
         kuisHasil.hidden = false;
         kuisHasil.textContent = 'Kuis hari ini sudah pernah lulus. Boleh diulang kapan saja.';
         tombolMulai.textContent = 'Ulangi Kuis';
-        tombol.classList.add('selesai');
+        if (sudahLulus2(hari.id)) tombol.classList.add('selesai');
       }
 
       function mulai() {
@@ -534,6 +664,7 @@
       function tampilkanSoal() {
         var soal = urutanSoal[idx];
         kuisProgress.textContent = 'Soal ' + (idx + 1) + '/' + urutanSoal.length;
+        kuisProgress.style.setProperty('--p', ((idx + 1) / urutanSoal.length * 100) + '%');
         kuisSoal.textContent = soal.arab;
         kuisInput.value = '';
         kuisInput.disabled = false;
@@ -551,6 +682,7 @@
         var soal = urutanSoal[idx];
         var jawabanUser = kuisInput.value.trim();
         var benar = cekJawaban(soal.arti, jawabanUser);
+        bunyi(benar ? 'benar' : 'salah');
         hasil.push({ arab: soal.arab, arti: soal.arti, jawaban: jawabanUser, benar: benar });
 
         menunggu = true;
@@ -600,6 +732,7 @@
         alat.hidden = false;
 
         var jumlahBenar = hasil.filter(function (h) { return h.benar; }).length;
+        bunyi(lulus ? 'lulus' : 'gagal');
         var rekap = hasil.map(function (h) {
           if (h.benar) {
             return '<div class="kuis-rekap benar">✅ <span class="arab">' + escapeHtml(h.arab) + '</span> — ' + escapeHtml(h.arti) + '</div>';
@@ -610,9 +743,10 @@
         var ringkasan;
         if (lulus) {
           localStorage.setItem(kunciPrefix(hari.id), '1');
-          ringkasan = '✅ Semua benar (' + jumlahBenar + '/' + hasil.length + ')! Hari berikutnya sudah terbuka.';
+          ringkasan = '✅ Semua benar (' + jumlahBenar + '/' + hasil.length + ')! ' +
+            (sudahLulus2(hari.id) ? 'Hari berikutnya sudah terbuka.' : 'Tinggal Kuis Tambahan (Indonesia → Arab) untuk membuka hari berikutnya.');
           tombolMulai.textContent = 'Ulangi Kuis';
-          tombol.classList.add('selesai');
+          if (sudahLulus2(hari.id)) tombol.classList.add('selesai');
           perbaruiKunci();
         } else {
           ringkasan = '❌ Benar ' + jumlahBenar + '/' + hasil.length + '. Coba lagi, soal akan diacak ulang.';
@@ -627,6 +761,210 @@
       kuisBatal.addEventListener('click', batalkan);
       kuisInput.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') { e.preventDefault(); kirim(); }
+      });
+
+      // Kuis tambahan: Indonesia -> Arab (isian 2 kolom: mufrad/madhi dan jamak/mudhari')
+      var JUMLAH_TAMBAHAN = 5;
+      var btnT = document.createElement('button');
+      btnT.type = 'button';
+      btnT.className = 'btn btn-tambahan';
+      btnT.textContent = sudahLulus2(hari.id) ? 'Ulangi Kuis Tambahan' : 'Kuis Tambahan: Indonesia → Arab (5 soal, wajib)';
+      tombolMulai.after(btnT);
+
+      var areaT = document.createElement('div');
+      areaT.className = 'kuis';
+      areaT.hidden = true;
+      areaT.innerHTML =
+        '<div class="kuis-progress"></div>' +
+        '<div class="kuis-soal indo"></div>' +
+        '<input type="text" class="kuis-input ar k1" lang="ar" dir="rtl" autocomplete="off" autocapitalize="off" spellcheck="false">' +
+        '<input type="text" class="kuis-input ar k2" lang="ar" dir="rtl" autocomplete="off" autocapitalize="off" spellcheck="false">' +
+        '<button type="button" class="btn kuis-kirim">Kirim</button>' +
+        '<div class="kuis-feedback" hidden></div>' +
+        '<button type="button" class="btn-kembali kuis-batal">Batalkan Kuis</button>';
+      var hasilT = document.createElement('div');
+      hasilT.className = 'kuis-hasil';
+      hasilT.hidden = true;
+      kuisWrap.appendChild(areaT);
+      kuisWrap.appendChild(hasilT);
+
+      var tProgress = areaT.querySelector('.kuis-progress');
+      var tSoal = areaT.querySelector('.kuis-soal');
+      var tIn1 = areaT.querySelector('.k1');
+      var tIn2 = areaT.querySelector('.k2');
+      var tKirim = areaT.querySelector('.kuis-kirim');
+      var tFeedback = areaT.querySelector('.kuis-feedback');
+      var tBatal = areaT.querySelector('.kuis-batal');
+
+      function potong(x) { return x.trim(); }
+
+      // Urai teks yang tampil: "mufrad جـ jamak(، jamak)" atau "madhi – mudhari'(، madhi – mudhari')"
+      function urai(teks) {
+        teks = teks.trim();
+        var bagian = teks.split(/\s+\u062C\u0640\s+/);
+        if (bagian.length === 2) {
+          return { tipe: 'isim', teks: teks, k1: [potong(bagian[0])], k2: bagian[1].split('\u060C').map(potong).filter(Boolean) };
+        }
+        if (teks.indexOf('\u2013') !== -1) {
+          var pasang = teks.split('\u060C').map(function (pp) {
+            var x = pp.split('\u2013');
+            return [potong(x[0]), potong(x[1])];
+          });
+          return { tipe: 'fiil', teks: teks, pasang: pasang };
+        }
+        return { tipe: 'tunggal', teks: teks, k1: [teks], k2: [] };
+      }
+
+      var dataT = Array.prototype.map.call(barisan, function (li) {
+        var q = urai(li.querySelector('.arab').textContent);
+        q.arti = li.querySelector('.arti').textContent.trim();
+        return q;
+      });
+      var soalT = [], idxT = 0, hasilListT = [], menungguT = false, timerT = null;
+
+      // Samakan penulisan Unicode (urutan harakat/shaddah, hamzah gabungan). Sukun (ْ) boleh ditulis atau tidak; harakat lain tetap harus persis
+      function normArab(x) {
+        return x.normalize('NFC')
+          .replace(/[\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g, '')
+          .replace(/[\u0652\u06E1]/g, '')
+          .replace(/\s+/g, ' ').trim();
+      }
+
+      function periksa(q, j1, j2) {
+        var a = normArab(j1), b = normArab(j2);
+        if (q.tipe === 'tunggal') {
+          return { b1: normArab(q.k1[0]) === a, b2: true };
+        }
+        if (q.tipe === 'isim') {
+          return { b1: normArab(q.k1[0]) === a, b2: q.k2.some(function (x) { return normArab(x) === b; }) };
+        }
+        var i = -1;
+        q.pasang.forEach(function (pp, n) { if (i < 0 && normArab(pp[0]) === a) i = n; });
+        var b2 = i >= 0
+          ? normArab(q.pasang[i][1]) === b
+          : q.pasang.some(function (pp) { return normArab(pp[1]) === b; });
+        return { b1: i >= 0, b2: b2 };
+      }
+
+      function ar(x) {
+        return '<span class="arab" lang="ar" dir="rtl" style="font-size:1.3rem">' + escapeHtml(x) + '</span>';
+      }
+
+      // Sinkron: tombol tambahan ikut tersembunyi saat tombol kuis utama tersembunyi
+      new MutationObserver(function () { btnT.hidden = tombolMulai.hidden; })
+        .observe(tombolMulai, { attributes: true, attributeFilter: ['hidden'] });
+      tombolMulai.addEventListener('click', function () { hasilT.hidden = true; hasilT.textContent = ''; });
+
+      function mulaiT() {
+        soalT = acak(dataT).slice(0, JUMLAH_TAMBAHAN);
+        idxT = 0; hasilListT = [];
+        kuisHasil.hidden = true;
+        hasilT.hidden = true; hasilT.textContent = '';
+        areaT.hidden = false;
+        tombolMulai.hidden = true;
+        isi.hidden = true; skor.hidden = true; alat.hidden = true;
+        tampilT();
+      }
+
+      function tampilT() {
+        var q = soalT[idxT];
+        var label = q.tipe === 'isim' ? ' — Isim: mufrad & jamak'
+          : q.tipe === 'fiil' ? " — Fi'il: madhi & mudhari'" : '';
+        tProgress.textContent = 'Soal ' + (idxT + 1) + '/' + soalT.length + label;
+        tProgress.style.setProperty('--p', ((idxT + 1) / soalT.length * 100) + '%');
+        tSoal.textContent = q.arti;
+        tIn1.placeholder = q.tipe === 'isim' ? 'Mufrad (dengan harakat)...'
+          : q.tipe === 'fiil' ? "Fi'il madhi (dengan harakat)..." : 'Tulis kata Arab (dengan harakat)...';
+        tIn2.placeholder = q.tipe === 'isim' ? 'Jamak (dengan harakat)...' : "Fi'il mudhari' (dengan harakat)...";
+        tIn2.hidden = (q.tipe === 'tunggal');
+        [tIn1, tIn2].forEach(function (el) {
+          el.value = '';
+          el.disabled = false;
+          el.classList.remove('benar', 'salah');
+        });
+        tFeedback.hidden = true;
+        tFeedback.textContent = '';
+        tFeedback.classList.remove('benar', 'salah');
+        menungguT = false;
+        tIn1.focus();
+      }
+
+      function kirimT() {
+        if (menungguT) return;
+        var q = soalT[idxT];
+        if (tIn1.value.trim() === '') { tIn1.focus(); return; }
+        if (!tIn2.hidden && tIn2.value.trim() === '') { tIn2.focus(); return; }
+        var j1 = tIn1.value.trim();
+        var j2 = tIn2.hidden ? '' : tIn2.value.trim();
+        var r = periksa(q, j1, j2);
+        var benar = r.b1 && r.b2;
+        bunyi(benar ? 'benar' : 'salah');
+        hasilListT.push({ q: q, j1: j1, j2: j2, benar: benar });
+
+        menungguT = true;
+        tIn1.disabled = true; tIn2.disabled = true;
+        tIn1.classList.add(r.b1 ? 'benar' : 'salah');
+        if (!tIn2.hidden) tIn2.classList.add(r.b2 ? 'benar' : 'salah');
+        tFeedback.hidden = false;
+        tFeedback.classList.toggle('benar', benar);
+        tFeedback.classList.toggle('salah', !benar);
+        tFeedback.innerHTML = benar ? '✅ Benar!' : '❌ Salah. Jawaban benar: ' + ar(q.teks);
+
+        timerT = setTimeout(function () {
+          timerT = null;
+          idxT++;
+          if (idxT >= soalT.length) { selesaiT(); } else { tampilT(); }
+        }, benar ? 1000 : 2600);
+      }
+
+      function pulihT() {
+        areaT.hidden = true;
+        isi.hidden = false; skor.hidden = false; alat.hidden = false;
+        tombolMulai.hidden = false;
+        menungguT = false;
+      }
+
+      function batalT() {
+        if (timerT) { clearTimeout(timerT); timerT = null; }
+        pulihT();
+      }
+
+      function selesaiT() {
+        pulihT();
+        var n = hasilListT.filter(function (h) { return h.benar; }).length;
+        var rekap = hasilListT.map(function (h) {
+          if (h.benar) {
+            return '<div class="kuis-rekap benar">✅ ' + escapeHtml(h.q.arti) + ' — ' + ar(h.q.teks) + '</div>';
+          }
+          var jwb = h.j2 ? h.j1 + ' / ' + h.j2 : h.j1;
+          return '<div class="kuis-rekap salah">❌ ' + escapeHtml(h.q.arti) + ' — jawabanmu: ' + ar(jwb) + ', benar: ' + ar(h.q.teks) + '</div>';
+        }).join('');
+        var lulusT = n === hasilListT.length;
+        bunyi(lulusT ? 'lulus' : 'gagal');
+        var ringkasT;
+        if (lulusT) {
+          localStorage.setItem(kunciPrefix(hari.id) + '-indoarab', '1');
+          ringkasT = '✅ Semua benar (' + n + '/' + hasilListT.length + ')! ' +
+            (sudahLulus(hari.id) ? 'Hari berikutnya sudah terbuka.' : 'Tinggal Kuis Arab → Indonesia untuk membuka hari berikutnya.');
+          btnT.textContent = 'Ulangi Kuis Tambahan';
+          if (sudahLulus(hari.id)) tombol.classList.add('selesai');
+          perbaruiKunci();
+        } else {
+          ringkasT = '❌ Benar ' + n + '/' + hasilListT.length + '. Coba lagi, soal akan diacak ulang.';
+          btnT.textContent = 'Coba Lagi Kuis Tambahan';
+        }
+        hasilT.hidden = false;
+        hasilT.innerHTML = ringkasT + '<div class="kuis-rekap-list">' + rekap + '</div>';
+      }
+
+      btnT.addEventListener('click', mulaiT);
+      tKirim.addEventListener('click', kirimT);
+      tBatal.addEventListener('click', batalT);
+      tIn1.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); if (tIn2.hidden) kirimT(); else tIn2.focus(); }
+      });
+      tIn2.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); kirimT(); }
       });
     }
   });
