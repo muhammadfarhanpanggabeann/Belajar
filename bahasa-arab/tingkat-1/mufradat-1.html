@@ -101,6 +101,56 @@
     font: .85rem/1.5 "Avenir Next", "Segoe UI", system-ui, sans-serif;
     color: #9AA8C7; direction: ltr; text-align: left;
   }
+
+  /* Kunci hari & kuis */
+  .item-menu { display: grid; justify-items: center; gap: .35rem; }
+  .btn:disabled { opacity: .4; cursor: not-allowed; filter: none; }
+  .catatan-kunci {
+    font: .8rem/1.3 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: #9AA8C7; text-align: center; max-width: 12rem;
+  }
+  .kuis-wrap {
+    width: min(560px, 100%); display: grid; gap: .75rem; margin-top: .5rem;
+    padding-top: 1rem; border-top: 1px dashed var(--line);
+  }
+  .kuis { display: grid; gap: .6rem; justify-items: center; text-align: center; }
+  .kuis-progress { color: #9AA8C7; font: .85rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif; }
+  .kuis-soal {
+    font-size: 2.3rem; line-height: 2.2; color: #FFFFFF;
+    padding: .5rem .75rem; letter-spacing: .02em;
+    background: rgba(74, 183, 224, .08); border-radius: 6px;
+    width: 100%;
+  }
+  .kuis-input {
+    width: 100%; padding: .65rem .9rem; border-radius: 6px;
+    border: 1px solid var(--line); background: rgba(13, 23, 59, .55);
+    color: #E8EEF7; font: 1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  }
+  .kuis-input:focus-visible { outline: 3px solid var(--teal); outline-offset: 1px; }
+  .kuis-input.benar { border-color: #48BB78; }
+  .kuis-input.salah { border-color: #F56565; }
+  .kuis-feedback {
+    width: 100%; padding: .55rem .8rem; border-radius: 6px;
+    font: 600 .95rem/1.5 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    text-align: center;
+  }
+  .kuis-feedback.benar { background: rgba(72, 187, 120, .18); color: #68D391; }
+  .kuis-feedback.salah { background: rgba(245, 101, 101, .18); color: #FC8181; }
+  .kuis-hasil {
+    color: #E8EEF7; text-align: center;
+    font: .95rem/1.6 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  }
+  .kuis-rekap-list { display: grid; gap: .4rem; margin-top: .85rem; text-align: left; }
+  .kuis-rekap {
+    padding: .5rem .75rem; border-radius: 6px;
+    font: .88rem/1.6 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: #E8EEF7;
+  }
+  .kuis-rekap .arab {
+    font-size: 1.1rem; line-height: 1.5;
+  }
+  .kuis-rekap.benar { background: rgba(72, 187, 120, .12); border-inline-start: 3px solid #48BB78; }
+  .kuis-rekap.salah { background: rgba(245, 101, 101, .12); border-inline-start: 3px solid #F56565; }
 </style>
 </head>
 <body>
@@ -108,7 +158,14 @@
   <section class="panel" id="menu">
     <a class="btn-kembali" href="./">Kembali</a>
     <button type="button" class="btn" id="buka-hari-1">Hari 1</button>
-    <button type="button" class="btn" id="buka-hari-2">Hari 2</button>
+    <div class="item-menu">
+      <button type="button" class="btn" id="buka-hari-2">Hari 2</button>
+      <p class="catatan-kunci" id="catatan-hari-2" hidden>🔒 Selesaikan kuis Hari 1 dulu</p>
+    </div>
+    <div class="item-menu">
+      <button type="button" class="btn" id="buka-hari-3">Hari 3</button>
+      <p class="catatan-kunci" id="catatan-hari-3" hidden>🔒 Selesaikan kuis Hari 2 dulu</p>
+    </div>
   </section>
   <section class="panel hari" id="hari-1" data-tombol="buka-hari-1" hidden>
     <button type="button" class="btn-kembali kembali">Kembali</button>
@@ -174,6 +231,18 @@
             <div class="kal b"><span class="kal-ar" lang="ar">يَتَأَدَّبُ الطُّلَّابُ فِي الْمَسْجِدِ.</span><span class="terj" lang="id" dir="ltr">Para siswa bersikap sopan di masjid.</span></div>
           </div></li>
       </ul>
+    </div>
+    <div class="kuis-wrap">
+      <button type="button" class="btn mulai-kuis">Mulai Kuis (wajib untuk membuka hari berikutnya)</button>
+      <div class="kuis" hidden>
+        <div class="kuis-progress"></div>
+        <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
+        <input type="text" class="kuis-input" placeholder="Tulis artinya dalam Bahasa Indonesia...">
+        <button type="button" class="btn kuis-kirim">Kirim</button>
+        <div class="kuis-feedback" hidden></div>
+        <button type="button" class="btn-kembali kuis-batal">Batalkan Kuis</button>
+      </div>
+      <div class="kuis-hasil" hidden></div>
     </div>
   </section>
   <section class="panel hari" id="hari-2" data-tombol="buka-hari-2" hidden>
@@ -242,16 +311,147 @@
           </div></li>
       </ul>
     </div>
+    <div class="kuis-wrap">
+      <button type="button" class="btn mulai-kuis">Mulai Kuis (wajib untuk membuka hari berikutnya)</button>
+      <div class="kuis" hidden>
+        <div class="kuis-progress"></div>
+        <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
+        <input type="text" class="kuis-input" placeholder="Tulis artinya dalam Bahasa Indonesia...">
+        <button type="button" class="btn kuis-kirim">Kirim</button>
+        <div class="kuis-feedback" hidden></div>
+        <button type="button" class="btn-kembali kuis-batal">Batalkan Kuis</button>
+      </div>
+      <div class="kuis-hasil" hidden></div>
+    </div>
+  </section>
+  <section class="panel hari" id="hari-3" data-tombol="buka-hari-3" hidden>
+    <button type="button" class="btn-kembali kembali">Kembali</button>
+    <div class="skor" aria-live="polite">0/10</div>
+    <div class="alat">
+      <button type="button" class="mode">Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Kalimat</button>
+    </div>
+    <div class="isi">
+      <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأسماء</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">ذَقَنٌ جـ أَذْقَانٌ</span><span class="arti">dagu</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">فِي ذَقَنِ الرَّجُلِ شَعْرٌ طَوِيلٌ.</span><span class="terj" lang="id" dir="ltr">Di dagu lelaki itu ada rambut yang panjang.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">أَذْقَانُ الْأَطْفَالِ نَاعِمَةٌ.</span><span class="terj" lang="id" dir="ltr">Dagu anak-anak itu halus.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">بَلْغَمٌ</span><span class="arti">dahak</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">خَرَجَ الْبَلْغَمُ مِنْ صَدْرِ الْمَرِيضِ.</span><span class="terj" lang="id" dir="ltr">Dahak keluar dari dada pasien itu.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">جَبْهَةٌ جـ جَبْهَاتٌ، جِبَاهٌ</span><span class="arti">dahi / kening</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">عَلَى جَبْهَةِ الْوَلَدِ عَرَقٌ.</span><span class="terj" lang="id" dir="ltr">Di dahi anak itu ada keringat.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">جِبَاهُ الطُّلَّابِ مُتْعَبَةٌ بَعْدَ الِامْتِحَانِ.</span><span class="terj" lang="id" dir="ltr">Dahi para siswa lelah setelah ujian.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">دَمٌ</span><span class="arti">darah</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">سَالَ الدَّمُ مِنْ يَدِ الْوَلَدِ.</span><span class="terj" lang="id" dir="ltr">Darah mengalir dari tangan anak itu.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">مَرَارَةٌ جـ مَرَائِرُ</span><span class="arti">empedu</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">مَرَارَةُ الدَّجَاجَةِ صَغِيرَةٌ.</span><span class="terj" lang="id" dir="ltr">Empedu ayam itu kecil.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">أَزَالَ الطَّبَّاخُ مَرَائِرَ الدَّجَاجِ.</span><span class="terj" lang="id" dir="ltr">Koki itu membuang empedu-empedu ayam.</span></div>
+          </div></li>
+      </ul>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأفعال</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">هَمَسَ – يَهْمِسُ</span><span class="arti">berbisik</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">هَمَسَ الْوَلَدُ فِي أُذُنِ صَدِيقِهِ.</span><span class="terj" lang="id" dir="ltr">Anak itu berbisik di telinga temannya.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">لِمَاذَا تَهْمِسُ؟ تَكَلَّمْ بِصَوْتٍ عَالٍ!</span><span class="terj" lang="id" dir="ltr">Kenapa kamu berbisik? Bicaralah dengan suara keras!</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">أَثْمَرَ – يُثْمِرُ</span><span class="arti">berbuah</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">أَثْمَرَتِ الشَّجَرَةُ هٰذَا الْعَامَ.</span><span class="terj" lang="id" dir="ltr">Pohon itu berbuah tahun ini.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">تُثْمِرُ أَشْجَارُ التُّفَّاحِ فِي الصَّيْفِ.</span><span class="terj" lang="id" dir="ltr">Pohon-pohon apel berbuah pada musim panas.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">عَدَلَ – يَعْدِلُ</span><span class="arti">berbuat adil</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">عَدَلَ الْقَاضِي بَيْنَ الْخَصْمَيْنِ.</span><span class="terj" lang="id" dir="ltr">Hakim itu berbuat adil di antara dua pihak yang bersengketa.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَجِبُ أَنْ يَعْدِلَ الْحَاكِمُ بَيْنَ النَّاسِ.</span><span class="terj" lang="id" dir="ltr">Pemimpin wajib berbuat adil di antara manusia.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَفَرَّعَ – يَتَفَرَّعُ</span><span class="arti">bercabang</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَفَرَّعَتِ الشَّجَرَةُ إِلَى غُصْنَيْنِ.</span><span class="terj" lang="id" dir="ltr">Pohon itu bercabang menjadi dua dahan.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَفَرَّعُ النَّهْرُ إِلَى عِدَّةِ رَوَافِدَ.</span><span class="terj" lang="id" dir="ltr">Sungai itu bercabang menjadi beberapa anak sungai.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">أَضَاءَ – يُضِيءُ، أَنَارَ – يُنِيرُ</span><span class="arti">bercahaya, menyinari</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">أَضَاءَ الْقَمَرُ السَّمَاءَ لَيْلًا.</span><span class="terj" lang="id" dir="ltr">Bulan menyinari langit di malam hari.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">تُنِيرُ الشَّمْسُ الْأَرْضَ نَهَارًا.</span><span class="terj" lang="id" dir="ltr">Matahari menyinari bumi di siang hari.</span></div>
+          </div></li>
+      </ul>
+    </div>
+    <div class="kuis-wrap">
+      <button type="button" class="btn mulai-kuis">Mulai Kuis (wajib untuk membuka hari berikutnya)</button>
+      <div class="kuis" hidden>
+        <div class="kuis-progress"></div>
+        <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
+        <input type="text" class="kuis-input" placeholder="Tulis artinya dalam Bahasa Indonesia...">
+        <button type="button" class="btn kuis-kirim">Kirim</button>
+        <div class="kuis-feedback" hidden></div>
+        <button type="button" class="btn-kembali kuis-batal">Batalkan Kuis</button>
+      </div>
+      <div class="kuis-hasil" hidden></div>
+    </div>
   </section>
 </main>
 <script>
   var menu = document.getElementById('menu');
   var urutan = [['', 'Semua'], ['tutup-arab', 'Tanpa Arab'], ['tutup-indo', 'Tanpa Indo']];
+  var urutanHari = ['hari-1', 'hari-2', 'hari-3'];
+
+  function kunciPrefix(id) { return 'mufradat-kuis-' + id; }
+
+  function sudahLulus(id) {
+    return localStorage.getItem(kunciPrefix(id)) === '1';
+  }
+
+  function perbaruiKunci() {
+    urutanHari.forEach(function (id, i) {
+      var tombol = document.getElementById('buka-' + id);
+      if (!tombol) return;
+      if (i === 0) { tombol.disabled = false; return; }
+      var prasyarat = urutanHari[i - 1];
+      var terbuka = sudahLulus(prasyarat);
+      tombol.disabled = !terbuka;
+      var catatan = document.getElementById('catatan-' + id);
+      if (catatan) catatan.hidden = terbuka;
+    });
+  }
+
+  function acak(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function normalisasi(s) {
+    return s.toLowerCase().normalize('NFKD')
+      .replace(/[^\p{L}\p{N}\s]/gu, '')
+      .trim().replace(/\s+/g, ' ');
+  }
+
+  function cekJawaban(arti, jawaban) {
+    var varian = arti.split(/[\/,]/).map(normalisasi);
+    varian.push(normalisasi(arti));
+    return varian.indexOf(normalisasi(jawaban)) !== -1;
+  }
 
   document.querySelectorAll('.hari').forEach(function (hari) {
     var tombol = document.getElementById(hari.dataset.tombol);
     var isi = hari.querySelector('.isi');
     var skor = hari.querySelector('.skor');
+    var alat = hari.querySelector('.alat');
     var mode = hari.querySelector('.mode');
     var tombolJumlah = hari.querySelector('.tombol-jumlah');
     var barisan = hari.querySelectorAll('.daftar li');
@@ -268,7 +468,6 @@
       var n = hari.querySelectorAll('.daftar li.hijau').length;
       skor.textContent = n + '/' + barisan.length;
       skor.classList.toggle('penuh', n === barisan.length);
-      tombol.classList.toggle('selesai', n === barisan.length);
     }
     function ganti(li) {
       var on = li.classList.toggle('hijau');
@@ -295,7 +494,144 @@
         tombolJumlah.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
     }
+
+    // Kuis
+    var kuisWrap = hari.querySelector('.kuis-wrap');
+    if (kuisWrap) {
+      var tombolMulai = kuisWrap.querySelector('.mulai-kuis');
+      var kuisArea = kuisWrap.querySelector('.kuis');
+      var kuisProgress = kuisWrap.querySelector('.kuis-progress');
+      var kuisSoal = kuisWrap.querySelector('.kuis-soal');
+      var kuisInput = kuisWrap.querySelector('.kuis-input');
+      var kuisKirim = kuisWrap.querySelector('.kuis-kirim');
+      var kuisHasil = kuisWrap.querySelector('.kuis-hasil');
+      var kuisFeedback = kuisWrap.querySelector('.kuis-feedback');
+      var kuisBatal = kuisWrap.querySelector('.kuis-batal');
+      var dataKata = Array.prototype.map.call(barisan, function (li) {
+        return { arab: li.querySelector('.arab').textContent, arti: li.querySelector('.arti').textContent };
+      });
+      var urutanSoal = [], idx = 0, hasil = [], menunggu = false, timerLanjut = null;
+
+      if (sudahLulus(hari.id)) {
+        kuisHasil.hidden = false;
+        kuisHasil.textContent = 'Kuis hari ini sudah pernah lulus. Boleh diulang kapan saja.';
+        tombolMulai.textContent = 'Ulangi Kuis';
+        tombol.classList.add('selesai');
+      }
+
+      function mulai() {
+        urutanSoal = acak(dataKata);
+        idx = 0; hasil = [];
+        kuisHasil.hidden = true; kuisHasil.textContent = '';
+        kuisArea.hidden = false;
+        tombolMulai.hidden = true;
+        isi.hidden = true;
+        skor.hidden = true;
+        alat.hidden = true;
+        tampilkanSoal();
+      }
+
+      function tampilkanSoal() {
+        var soal = urutanSoal[idx];
+        kuisProgress.textContent = 'Soal ' + (idx + 1) + '/' + urutanSoal.length;
+        kuisSoal.textContent = soal.arab;
+        kuisInput.value = '';
+        kuisInput.disabled = false;
+        kuisInput.classList.remove('benar', 'salah');
+        kuisFeedback.hidden = true;
+        kuisFeedback.textContent = '';
+        kuisFeedback.classList.remove('benar', 'salah');
+        menunggu = false;
+        kuisInput.focus();
+      }
+
+      function kirim() {
+        if (menunggu) return;
+        if (kuisInput.value.trim() === '') { kuisInput.focus(); return; }
+        var soal = urutanSoal[idx];
+        var jawabanUser = kuisInput.value.trim();
+        var benar = cekJawaban(soal.arti, jawabanUser);
+        hasil.push({ arab: soal.arab, arti: soal.arti, jawaban: jawabanUser, benar: benar });
+
+        menunggu = true;
+        kuisInput.disabled = true;
+        kuisInput.classList.add(benar ? 'benar' : 'salah');
+        kuisFeedback.hidden = false;
+        kuisFeedback.classList.toggle('benar', benar);
+        kuisFeedback.classList.toggle('salah', !benar);
+        kuisFeedback.textContent = benar
+          ? '✅ Benar! (' + soal.arti + ')'
+          : '❌ Salah. Jawaban benar: ' + soal.arti;
+
+        timerLanjut = setTimeout(function () {
+          timerLanjut = null;
+          idx++;
+          if (idx >= urutanSoal.length) {
+            selesai(hasil.every(function (h) { return h.benar; }));
+          } else {
+            tampilkanSoal();
+          }
+        }, 1300);
+      }
+
+      function batalkan() {
+        if (timerLanjut) { clearTimeout(timerLanjut); timerLanjut = null; }
+        kuisArea.hidden = true;
+        kuisHasil.hidden = true;
+        kuisHasil.textContent = '';
+        isi.hidden = false;
+        skor.hidden = false;
+        alat.hidden = false;
+        tombolMulai.hidden = false;
+        menunggu = false;
+      }
+
+      function escapeHtml(s) {
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function selesai(lulus) {
+        kuisArea.hidden = true;
+        kuisHasil.hidden = false;
+        isi.hidden = false;
+        skor.hidden = false;
+        alat.hidden = false;
+
+        var jumlahBenar = hasil.filter(function (h) { return h.benar; }).length;
+        var rekap = hasil.map(function (h) {
+          if (h.benar) {
+            return '<div class="kuis-rekap benar">✅ <span class="arab">' + escapeHtml(h.arab) + '</span> — ' + escapeHtml(h.arti) + '</div>';
+          }
+          return '<div class="kuis-rekap salah">❌ <span class="arab">' + escapeHtml(h.arab) + '</span> — jawabanmu: "' + escapeHtml(h.jawaban || '(kosong)') + '", benar: ' + escapeHtml(h.arti) + '</div>';
+        }).join('');
+
+        var ringkasan;
+        if (lulus) {
+          localStorage.setItem(kunciPrefix(hari.id), '1');
+          ringkasan = '✅ Semua benar (' + jumlahBenar + '/' + hasil.length + ')! Hari berikutnya sudah terbuka.';
+          tombolMulai.textContent = 'Ulangi Kuis';
+          tombol.classList.add('selesai');
+          perbaruiKunci();
+        } else {
+          ringkasan = '❌ Benar ' + jumlahBenar + '/' + hasil.length + '. Coba lagi, soal akan diacak ulang.';
+          tombolMulai.textContent = 'Coba Lagi';
+        }
+        kuisHasil.innerHTML = ringkasan + '<div class="kuis-rekap-list">' + rekap + '</div>';
+        tombolMulai.hidden = false;
+      }
+
+      tombolMulai.addEventListener('click', mulai);
+      kuisKirim.addEventListener('click', kirim);
+      kuisBatal.addEventListener('click', batalkan);
+      kuisInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); kirim(); }
+      });
+    }
   });
+
+  perbaruiKunci();
 </script>
 </body>
 </html>
