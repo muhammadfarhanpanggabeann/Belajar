@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title></title>
+<title>Mufradat Arab – Hafalan 8 Hari</title>
 <style>
   :root {
     --navy: #0D173B;
@@ -102,12 +102,21 @@
     color: #9AA8C7; direction: ltr; text-align: left;
   }
 
+  .ket {
+    font: .85rem/1.6 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: #E8EEF7; direction: ltr; text-align: left;
+    padding: .55rem .75rem; border-radius: 6px;
+    background: rgba(74, 183, 224, .1); border: 1px dashed var(--line);
+  }
+  .ket b { color: var(--teal); }
+  .ket [lang="ar"] { font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Geeza Pro", serif; font-size: 1.1rem; }
+
   /* Kunci hari & kuis */
   .item-menu { display: grid; justify-items: center; gap: .35rem; }
   .btn:disabled { opacity: .4; cursor: not-allowed; filter: none; }
   .catatan-kunci {
     font: .8rem/1.3 "Avenir Next", "Segoe UI", system-ui, sans-serif;
-    color: #9AA8C7; text-align: center; max-width: 12rem;
+    color: #9AA8C7; text-align: center; max-width: 16rem;
   }
   .kuis-wrap {
     width: min(560px, 100%); display: grid; gap: .85rem; margin-top: .75rem;
@@ -195,6 +204,25 @@
   .kuis-rekap.benar { background: rgba(72, 187, 120, .12); border-inline-start: 3px solid #48BB78; }
   .kuis-rekap.salah { background: rgba(245, 101, 101, .12); border-inline-start: 3px solid #F56565; }
 
+  /* Total mufradat di menu */
+  #menu { position: relative; }
+  .total-mufradat {
+    position: absolute; top: 1rem; right: 1rem;
+    padding: .3rem .8rem; border-radius: 999px;
+    border: 1px solid var(--teal); background: rgba(74, 183, 224, .12); color: #E8EEF7;
+    font: 700 1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  }
+  .total-mufradat.penuh { border-color: #48BB78; background: rgba(72, 187, 120, .2); color: #68D391; }
+
+  /* Skor kuis (benar/dijawab) */
+  .lencana-skor {
+    position: fixed; top: 1rem; right: 1rem; z-index: 20;
+    padding: .35rem .85rem; border-radius: 999px;
+    background: var(--navy-panel); border: 1px solid var(--teal); color: #E8EEF7;
+    font: 700 1.1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    box-shadow: 0 6px 18px -8px rgba(0, 0, 0, .7);
+  }
+
   /* Tombol suara */
   .tombol-suara {
     position: fixed; right: 1rem; bottom: 1rem; z-index: 20;
@@ -211,6 +239,7 @@
 <main class="wrap">
   <section class="panel" id="menu">
     <a class="btn-kembali" href="./">Kembali</a>
+    <div class="total-mufradat" id="total-mufradat" aria-live="polite" title="Mufradat dikuasai / total">0/0</div>
     <button type="button" class="btn" id="buka-hari-1">Hari 1</button>
     <div class="item-menu">
       <button type="button" class="btn" id="buka-hari-2">Hari 2</button>
@@ -220,13 +249,33 @@
       <button type="button" class="btn" id="buka-hari-3">Hari 3</button>
       <p class="catatan-kunci" id="catatan-hari-3" hidden>🔒 Selesaikan kedua kuis Hari 2 dulu</p>
     </div>
+    <div class="item-menu">
+      <button type="button" class="btn" id="buka-hari-4">Hari 4</button>
+      <p class="catatan-kunci" id="catatan-hari-4" hidden>🔒 Selesaikan kedua kuis Hari 3 dulu</p>
+    </div>
+    <div class="item-menu">
+      <button type="button" class="btn" id="buka-hari-5">Hari 5</button>
+      <p class="catatan-kunci" id="catatan-hari-5" hidden>🔒 Selesaikan kedua kuis Hari 4 dulu</p>
+    </div>
+    <div class="item-menu">
+      <button type="button" class="btn" id="buka-hari-6">Hari 6</button>
+      <p class="catatan-kunci" id="catatan-hari-6" hidden>🔒 Selesaikan kedua kuis Hari 5 dulu</p>
+    </div>
+    <div class="item-menu">
+      <button type="button" class="btn" id="buka-hari-7">Hari 7 (Ujian)</button>
+      <p class="catatan-kunci" id="catatan-hari-7" hidden>🔒 Selesaikan kedua kuis Hari 6 dulu</p>
+    </div>
+    <div class="item-menu">
+      <button type="button" class="btn" id="buka-hari-8">Hari 8</button>
+      <p class="catatan-kunci" id="catatan-hari-8" hidden>🔒 Lulus Ujian Hari 7 dulu</p>
+    </div>
   </section>
   <section class="panel hari" id="hari-1" data-tombol="buka-hari-1" hidden>
     <button type="button" class="btn-kembali kembali">Kembali</button>
     <div class="skor" aria-live="polite">0/10</div>
     <div class="alat">
-      <button type="button" class="mode">Semua</button>
-      <button type="button" class="tombol-jumlah" aria-pressed="false">Kalimat</button>
+      <button type="button" class="mode">Tampilan: Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Tampilkan Kalimat</button>
     </div>
     <div class="isi">
       <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
@@ -287,7 +336,7 @@
       </ul>
     </div>
     <div class="kuis-wrap">
-      <button type="button" class="btn mulai-kuis">Mulai Kuis Arab → Indonesia (wajib)</button>
+      <button type="button" class="btn mulai-kuis">Kuis Pertama: Arab → Indonesia (wajib)</button>
       <div class="kuis" hidden>
         <div class="kuis-progress"></div>
         <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
@@ -303,8 +352,8 @@
     <button type="button" class="btn-kembali kembali">Kembali</button>
     <div class="skor" aria-live="polite">0/10</div>
     <div class="alat">
-      <button type="button" class="mode">Semua</button>
-      <button type="button" class="tombol-jumlah" aria-pressed="false">Kalimat</button>
+      <button type="button" class="mode">Tampilan: Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Tampilkan Kalimat</button>
     </div>
     <div class="isi">
       <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
@@ -312,7 +361,7 @@
       <ul class="daftar">
         <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">شَفَّةٌ جـ شِفَاهٌ</span><span class="arti">bibir</span>
           <div class="jumlah" dir="rtl">
-            <div class="kal a"><span class="kal-ar" lang="ar">الشَّفَةُ الْعُلْيَا لِلطِّفْلِ صَغِيرَةٌ.</span><span class="terj" lang="id" dir="ltr">Bibir atas anak itu kecil.</span></div>
+            <div class="kal a"><span class="kal-ar" lang="ar">الشَّفَّةُ الْعُلْيَا لِلطِّفْلِ صَغِيرَةٌ.</span><span class="terj" lang="id" dir="ltr">Bibir atas anak itu kecil.</span></div>
             <div class="kal b"><span class="kal-ar" lang="ar">جَفَّتْ شِفَاهُ الْمُسَافِرِ مِنَ الْعَطَشِ.</span><span class="terj" lang="id" dir="ltr">Bibir musafir itu kering karena haus.</span></div>
           </div></li>
         <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">هُدْبٌ جـ أَهْدَابٌ</span><span class="arti">bulu mata</span>
@@ -366,7 +415,7 @@
       </ul>
     </div>
     <div class="kuis-wrap">
-      <button type="button" class="btn mulai-kuis">Mulai Kuis Arab → Indonesia (wajib)</button>
+      <button type="button" class="btn mulai-kuis">Kuis Pertama: Arab → Indonesia (wajib)</button>
       <div class="kuis" hidden>
         <div class="kuis-progress"></div>
         <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
@@ -382,8 +431,8 @@
     <button type="button" class="btn-kembali kembali">Kembali</button>
     <div class="skor" aria-live="polite">0/10</div>
     <div class="alat">
-      <button type="button" class="mode">Semua</button>
-      <button type="button" class="tombol-jumlah" aria-pressed="false">Kalimat</button>
+      <button type="button" class="mode">Tampilan: Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Tampilkan Kalimat</button>
     </div>
     <div class="isi">
       <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
@@ -394,18 +443,21 @@
             <div class="kal a"><span class="kal-ar" lang="ar">فِي ذَقَنِ الرَّجُلِ شَعْرٌ طَوِيلٌ.</span><span class="terj" lang="id" dir="ltr">Di dagu lelaki itu ada rambut yang panjang.</span></div>
             <div class="kal b"><span class="kal-ar" lang="ar">أَذْقَانُ الْأَطْفَالِ نَاعِمَةٌ.</span><span class="terj" lang="id" dir="ltr">Dagu anak-anak itu halus.</span></div>
           </div></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">بَلْغَمٌ</span><span class="arti">dahak</span>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">بَلْغَمٌ جـ بَلَاغِمُ</span><span class="arti">dahak</span>
           <div class="jumlah" dir="rtl">
             <div class="kal a"><span class="kal-ar" lang="ar">خَرَجَ الْبَلْغَمُ مِنْ صَدْرِ الْمَرِيضِ.</span><span class="terj" lang="id" dir="ltr">Dahak keluar dari dada pasien itu.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">تَجَمَّعَتِ الْبَلَاغِمُ فِي صَدْرِ الْمَرِيضِ.</span><span class="terj" lang="id" dir="ltr">Dahak-dahak menumpuk di dada pasien itu.</span></div>
           </div></li>
         <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">جَبْهَةٌ جـ جَبْهَاتٌ، جِبَاهٌ</span><span class="arti">dahi / kening</span>
           <div class="jumlah" dir="rtl">
             <div class="kal a"><span class="kal-ar" lang="ar">عَلَى جَبْهَةِ الْوَلَدِ عَرَقٌ.</span><span class="terj" lang="id" dir="ltr">Di dahi anak itu ada keringat.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">تَصَبَّبَتِ الْجَبْهَاتُ عَرَقًا بَعْدَ الْجَرْيِ.</span><span class="terj" lang="id" dir="ltr">Dahi-dahi bercucuran keringat setelah berlari.</span></div>
             <div class="kal b"><span class="kal-ar" lang="ar">جِبَاهُ الطُّلَّابِ مُتْعَبَةٌ بَعْدَ الِامْتِحَانِ.</span><span class="terj" lang="id" dir="ltr">Dahi para siswa lelah setelah ujian.</span></div>
           </div></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">دَمٌ</span><span class="arti">darah</span>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">دَمٌ جـ دِمَاءٌ</span><span class="arti">darah</span>
           <div class="jumlah" dir="rtl">
             <div class="kal a"><span class="kal-ar" lang="ar">سَالَ الدَّمُ مِنْ يَدِ الْوَلَدِ.</span><span class="terj" lang="id" dir="ltr">Darah mengalir dari tangan anak itu.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">سَالَتِ الدِّمَاءُ فِي الْمَعْرَكَةِ.</span><span class="terj" lang="id" dir="ltr">Darah mengalir dalam pertempuran.</span></div>
           </div></li>
         <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">مَرَارَةٌ جـ مَرَائِرُ</span><span class="arti">empedu</span>
           <div class="jumlah" dir="rtl">
@@ -435,15 +487,321 @@
             <div class="kal a"><span class="kal-ar" lang="ar">تَفَرَّعَتِ الشَّجَرَةُ إِلَى غُصْنَيْنِ.</span><span class="terj" lang="id" dir="ltr">Pohon itu bercabang menjadi dua dahan.</span></div>
             <div class="kal b"><span class="kal-ar" lang="ar">يَتَفَرَّعُ النَّهْرُ إِلَى عِدَّةِ رَوَافِدَ.</span><span class="terj" lang="id" dir="ltr">Sungai itu bercabang menjadi beberapa anak sungai.</span></div>
           </div></li>
-        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">أَضَاءَ – يُضِيءُ، أَنَارَ – يُنِيرُ</span><span class="arti">bercahaya, menyinari</span>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">أَضَاءَ – يُضِيءُ</span><span class="arti">bercahaya</span>
           <div class="jumlah" dir="rtl">
-            <div class="kal a"><span class="kal-ar" lang="ar">أَضَاءَ الْقَمَرُ السَّمَاءَ لَيْلًا.</span><span class="terj" lang="id" dir="ltr">Bulan menyinari langit di malam hari.</span></div>
-            <div class="kal b"><span class="kal-ar" lang="ar">تُنِيرُ الشَّمْسُ الْأَرْضَ نَهَارًا.</span><span class="terj" lang="id" dir="ltr">Matahari menyinari bumi di siang hari.</span></div>
+            <div class="kal a"><span class="kal-ar" lang="ar">أَضَاءَ الْقَمَرُ السَّمَاءَ لَيْلًا.</span><span class="terj" lang="id" dir="ltr">Bulan bercahaya menerangi langit di malam hari.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يُضِيءُ الْمِصْبَاحُ الْغُرْفَةَ.</span><span class="terj" lang="id" dir="ltr">Lampu itu bercahaya menerangi kamar.</span></div>
           </div></li>
       </ul>
     </div>
     <div class="kuis-wrap">
-      <button type="button" class="btn mulai-kuis">Mulai Kuis Arab → Indonesia (wajib)</button>
+      <button type="button" class="btn mulai-kuis">Kuis Pertama: Arab → Indonesia (wajib)</button>
+      <div class="kuis" hidden>
+        <div class="kuis-progress"></div>
+        <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
+        <input type="text" class="kuis-input" placeholder="Tulis artinya dalam Bahasa Indonesia...">
+        <button type="button" class="btn kuis-kirim">Kirim</button>
+        <div class="kuis-feedback" hidden></div>
+        <button type="button" class="btn-kembali kuis-batal">Batalkan Kuis</button>
+      </div>
+      <div class="kuis-hasil" hidden></div>
+    </div>
+  </section>
+<section class="panel hari" id="hari-4" data-tombol="buka-hari-4" hidden>
+    <button type="button" class="btn-kembali kembali">Kembali</button>
+    <div class="skor" aria-live="polite">0/10</div>
+    <div class="alat">
+      <button type="button" class="mode">Tampilan: Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Tampilkan Kalimat</button>
+    </div>
+    <div class="isi">
+      <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأسماء</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">سِنٌّ جـ أَسْنَانٌ</span><span class="arti">gigi</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">اِنْكَسَرَتْ سِنُّ الْوَلَدِ.</span><span class="terj" lang="id" dir="ltr">Gigi anak itu patah.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">أُنَظِّفُ أَسْنَانِي بَعْدَ الْأَكْلِ.</span><span class="terj" lang="id" dir="ltr">Aku membersihkan gigiku setelah makan.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">لِثَّةٌ جـ لِثًى</span><span class="arti">gusi</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تُؤْلِمُنِي لِثَّتِي.</span><span class="terj" lang="id" dir="ltr">Gusiku terasa sakit.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">اللِّثَى السَّلِيمَةُ وَرْدِيَّةُ اللَّوْنِ.</span><span class="terj" lang="id" dir="ltr">Gusi yang sehat berwarna merah muda.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">كَبِدٌ جـ أَكْبَادٌ</span><span class="arti">hati (organ) / liver</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">الْكَبِدُ عُضْوٌ مُهِمٌّ فِي الْجِسْمِ.</span><span class="terj" lang="id" dir="ltr">Hati adalah organ penting di dalam tubuh.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَأْكُلُ الْأَسَدُ أَكْبَادَ الْغَزَلَانِ.</span><span class="terj" lang="id" dir="ltr">Singa memakan hati rusa-rusa.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">فُؤَادٌ جـ أَفْئِدَةٌ</span><span class="arti">hati (perasaan)</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">فُؤَادُ الْأُمِّ حَزِينٌ.</span><span class="terj" lang="id" dir="ltr">Hati ibu itu sedih.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">فَرِحَتْ أَفْئِدَةُ الْأَطْفَالِ بِالْعِيدِ.</span><span class="terj" lang="id" dir="ltr">Hati anak-anak bergembira karena hari raya.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">حَدَقَةٌ جـ حَدَقَاتٌ، حِدَاقٌ</span><span class="arti">hitam mata</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">حَدَقَةُ الْقِطَّةِ تَتَّسِعُ فِي الظَّلَامِ.</span><span class="terj" lang="id" dir="ltr">Hitam mata (pupil) kucing melebar dalam gelap.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">حَدَقَاتُ الْأَطْفَالِ تَلْمَعُ فَرَحًا.</span><span class="terj" lang="id" dir="ltr">Hitam mata anak-anak berbinar karena senang.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">حِدَاقُ الصُّقُورِ حَادَّةٌ.</span><span class="terj" lang="id" dir="ltr">Hitam mata para elang itu tajam.</span></div>
+          </div></li>
+      </ul>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأفعال</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">مَزَحَ – يَمْزَحُ</span><span class="arti">bercanda</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">مَزَحَ الْمُعَلِّمُ مَعَ الطُّلَّابِ.</span><span class="terj" lang="id" dir="ltr">Guru itu bercanda dengan para murid.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">هُوَ يَمْزَحُ مَعَ أَصْدِقَائِهِ كَثِيرًا.</span><span class="terj" lang="id" dir="ltr">Dia sering bercanda dengan teman-temannya.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">قَصَّ – يَقُصُّ</span><span class="arti">bercerita</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">قَصَّتِ الْجَدَّةُ قِصَّةً جَمِيلَةً.</span><span class="terj" lang="id" dir="ltr">Nenek bercerita sebuah kisah yang indah.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَقُصُّ الْأَبُ عَلَى أَوْلَادِهِ قَبْلَ النَّوْمِ.</span><span class="terj" lang="id" dir="ltr">Ayah bercerita kepada anak-anaknya sebelum tidur.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَجَرَ – يَتْجُرُ</span><span class="arti">berdagang</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَجَرَ أَبِي فِي الْقُمَاشِ.</span><span class="terj" lang="id" dir="ltr">Ayahku berdagang kain.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتْجُرُ أَخِي فِي السَّيَّارَاتِ.</span><span class="terj" lang="id" dir="ltr">Kakakku berdagang mobil.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَصَالَحَ – يَتَصَالَحُ</span><span class="arti">berdamai</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَصَالَحَ الْأَخَوَانِ بَعْدَ الْخِصَامِ.</span><span class="terj" lang="id" dir="ltr">Dua bersaudara itu berdamai setelah bertengkar.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَصَالَحُ الْجَارَانِ فِي الْعِيدِ.</span><span class="terj" lang="id" dir="ltr">Dua tetangga itu berdamai pada hari raya.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَزَيَّنَ – يَتَزَيَّنُ</span><span class="arti">berdandan</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَزَيَّنَتِ الْعَرُوسُ لِلْحَفْلِ.</span><span class="terj" lang="id" dir="ltr">Pengantin perempuan berdandan untuk pesta.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">تَتَزَيَّنُ الْفَتَاةُ قَبْلَ الْخُرُوجِ.</span><span class="terj" lang="id" dir="ltr">Gadis itu berdandan sebelum keluar.</span></div>
+          </div></li>
+      </ul>
+    </div>
+    <div class="kuis-wrap">
+      <button type="button" class="btn mulai-kuis">Kuis Pertama: Arab → Indonesia (wajib)</button>
+      <div class="kuis" hidden>
+        <div class="kuis-progress"></div>
+        <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
+        <input type="text" class="kuis-input" placeholder="Tulis artinya dalam Bahasa Indonesia...">
+        <button type="button" class="btn kuis-kirim">Kirim</button>
+        <div class="kuis-feedback" hidden></div>
+        <button type="button" class="btn-kembali kuis-batal">Batalkan Kuis</button>
+      </div>
+      <div class="kuis-hasil" hidden></div>
+    </div>
+  </section>
+<section class="panel hari" id="hari-5" data-tombol="buka-hari-5" hidden>
+    <button type="button" class="btn-kembali kembali">Kembali</button>
+    <div class="skor" aria-live="polite">0/10</div>
+    <div class="alat">
+      <button type="button" class="mode">Tampilan: Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Tampilkan Kalimat</button>
+    </div>
+    <div class="isi">
+      <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأسماء</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">رَأْسٌ جـ رُؤُوسٌ</span><span class="arti">kepala</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">أَشْعُرُ بِأَلَمٍ فِي رَأْسِي.</span><span class="terj" lang="id" dir="ltr">Aku merasa sakit di kepalaku.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">رُؤُوسُ الْجُنُودِ مُغَطَّاةٌ بِالْخُوَذِ.</span><span class="terj" lang="id" dir="ltr">Kepala para prajurit tertutup helm.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">جَفْنٌ جـ أَجْفَانٌ، جُفُونٌ</span><span class="arti">kelopak</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">أَغْمَضَ الطِّفْلُ جَفْنَيْهِ.</span><span class="terj" lang="id" dir="ltr">Anak itu memejamkan kedua kelopak matanya.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">أُغْلِقَتْ أَجْفَانُ الْأَطْفَالِ عِنْدَ النَّوْمِ.</span><span class="terj" lang="id" dir="ltr">Kelopak mata anak-anak terpejam saat tidur.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">جُفُونُ الْمُسَافِرِينَ ثَقِيلَةٌ مِنَ التَّعَبِ.</span><span class="terj" lang="id" dir="ltr">Kelopak mata para musafir berat karena lelah.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">جِلْدٌ جـ جُلُودٌ</span><span class="arti">kulit</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">جِلْدُ الطِّفْلِ نَاعِمٌ.</span><span class="terj" lang="id" dir="ltr">Kulit anak itu halus.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">تُصْنَعُ الْأَحْذِيَةُ مِنَ الْجُلُودِ.</span><span class="terj" lang="id" dir="ltr">Sepatu dibuat dari kulit.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">شَارِبٌ جـ شَوَارِبُ</span><span class="arti">kumis</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">لِلرَّجُلِ شَارِبٌ أَسْوَدُ.</span><span class="terj" lang="id" dir="ltr">Lelaki itu punya kumis hitam.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">شَوَارِبُ الْقِطَطِ طَوِيلَةٌ.</span><span class="terj" lang="id" dir="ltr">Kumis kucing-kucing itu panjang.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">رِئَةٌ جـ رِئَاتٌ</span><span class="arti">paru-paru</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">الْتَهَبَتْ رِئَةُ الْمَرِيضِ.</span><span class="terj" lang="id" dir="ltr">Paru-paru pasien itu meradang.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">الرِّئَاتُ تَحْتَاجُ إِلَى هَوَاءٍ نَقِيٍّ.</span><span class="terj" lang="id" dir="ltr">Paru-paru membutuhkan udara yang bersih.</span></div>
+          </div></li>
+      </ul>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأفعال</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">قَامَ – يَقُومُ</span><span class="arti">berdiri</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">قَامَ الطُّلَّابُ احْتِرَامًا لِلْمُعَلِّمِ.</span><span class="terj" lang="id" dir="ltr">Para murid berdiri untuk menghormati guru.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَقُومُ الْمُصَلُّونَ فِي الصَّفِّ.</span><span class="terj" lang="id" dir="ltr">Orang-orang yang shalat berdiri di dalam shaf.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">كَذَبَ – يَكْذِبُ</span><span class="arti">berdusta</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">كَذَبَ الْوَلَدُ عَلَى أُمِّهِ.</span><span class="terj" lang="id" dir="ltr">Anak itu berdusta kepada ibunya.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">لَا يَكْذِبُ الْمُؤْمِنُ.</span><span class="terj" lang="id" dir="ltr">Orang beriman tidak berdusta.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِنْتَشَرَ – يَنْتَشِرُ</span><span class="arti">menyebar</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">اِنْتَشَرَ الْخَبَرُ فِي الْمَدِينَةِ.</span><span class="terj" lang="id" dir="ltr">Kabar itu menyebar di kota.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَنْتَشِرُ الْمَرَضُ بِسُرْعَةٍ.</span><span class="terj" lang="id" dir="ltr">Penyakit itu menyebar dengan cepat.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">أَفْتَى – يُفْتِي</span><span class="arti">berfatwa</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">أَفْتَى الشَّيْخُ فِي الْمَسْأَلَةِ.</span><span class="terj" lang="id" dir="ltr">Syekh itu berfatwa dalam masalah tersebut.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يُفْتِي الْعَالِمُ بِالْحُكْمِ.</span><span class="terj" lang="id" dir="ltr">Ulama itu berfatwa tentang hukumnya.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَرَكَّزَ – يَتَرَكَّزُ فِي</span><span class="arti">berfokus pada</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَرَكَّزَ الطَّالِبُ فِي الدَّرْسِ.</span><span class="terj" lang="id" dir="ltr">Siswa itu berfokus pada pelajaran.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَرَكَّزُ الْبَحْثُ فِي الْمُشْكِلَةِ.</span><span class="terj" lang="id" dir="ltr">Penelitian itu berfokus pada masalah itu.</span></div>
+          </div></li>
+      </ul>
+    </div>
+    <div class="kuis-wrap">
+      <button type="button" class="btn mulai-kuis">Kuis Pertama: Arab → Indonesia (wajib)</button>
+      <div class="kuis" hidden>
+        <div class="kuis-progress"></div>
+        <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
+        <input type="text" class="kuis-input" placeholder="Tulis artinya dalam Bahasa Indonesia...">
+        <button type="button" class="btn kuis-kirim">Kirim</button>
+        <div class="kuis-feedback" hidden></div>
+        <button type="button" class="btn-kembali kuis-batal">Batalkan Kuis</button>
+      </div>
+      <div class="kuis-hasil" hidden></div>
+    </div>
+  </section>
+<section class="panel hari" id="hari-6" data-tombol="buka-hari-6" hidden>
+    <button type="button" class="btn-kembali kembali">Kembali</button>
+    <div class="skor" aria-live="polite">0/10</div>
+    <div class="alat">
+      <button type="button" class="mode">Tampilan: Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Tampilkan Kalimat</button>
+    </div>
+    <div class="isi">
+      <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأسماء</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">لِسَانٌ جـ أَلْسِنَةٌ</span><span class="arti">lidah</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">لِسَانُ الْقِطَّةِ خَشِنٌ.</span><span class="terj" lang="id" dir="ltr">Lidah kucing itu kasar.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">تَلَوَّنَتْ أَلْسِنَةُ الْأَطْفَالِ بِلَوْنِ الْحَلْوَى.</span><span class="terj" lang="id" dir="ltr">Lidah anak-anak itu berwarna seperti permen.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">عُنُقٌ جـ أَعْنَاقٌ</span><span class="arti">leher</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">لِلزَّرَافَةِ عُنُقٌ طَوِيلٌ.</span><span class="terj" lang="id" dir="ltr">Jerapah punya leher yang panjang.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">رَفَعَ الْمُشَاهِدُونَ أَعْنَاقَهُمْ لِيَرَوُا الْمَلْعَبَ.</span><span class="terj" lang="id" dir="ltr">Para penonton menjulurkan leher mereka untuk melihat lapangan.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">دَسَمٌ جـ أَدْسَامٌ</span><span class="arti">lemak</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">هَذَا الطَّعَامُ كَثِيرُ الدَّسَمِ.</span><span class="terj" lang="id" dir="ltr">Makanan ini banyak lemaknya.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">تُعْطِي الْأَدْسَامُ الْجِسْمَ طَاقَةً.</span><span class="terj" lang="id" dir="ltr">Lemak-lemak memberi tubuh energi.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">طِحَالٌ جـ أَطْحِلَةٌ</span><span class="arti">limpa</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">الطِّحَالُ فِي الْجَانِبِ الْأَيْسَرِ مِنَ الْبَطْنِ.</span><span class="terj" lang="id" dir="ltr">Limpa berada di sisi kiri perut.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">دَرَسَ الطُّلَّابُ أَطْحِلَةَ الْحَيَوَانَاتِ.</span><span class="terj" lang="id" dir="ltr">Para siswa mempelajari limpa hewan-hewan.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">بُصَاقٌ</span><span class="arti">ludah</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">جَفَّ الْبُصَاقُ عَلَى الْأَرْضِ.</span><span class="terj" lang="id" dir="ltr">Ludah itu mengering di lantai.</span></div>
+          </div></li>
+      </ul>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأفعال</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">عَمِلَ – يَعْمَلُ</span><span class="arti">berfungsi, bekerja</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">عَمِلَتِ الْآلَةُ جَيِّدًا.</span><span class="terj" lang="id" dir="ltr">Mesin itu berfungsi dengan baik.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَعْمَلُ الْمُحَرِّكُ بِالْبَنْزِينِ.</span><span class="terj" lang="id" dir="ltr">Mesin itu bekerja dengan bensin.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِتَّحَدَ – يَتَّحِدُ</span><span class="arti">bersatu</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">اِتَّحَدَتِ الْقَبَائِلُ فِي الْحَرْبِ.</span><span class="terj" lang="id" dir="ltr">Suku-suku itu bersatu dalam perang.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَّحِدُ الْمُسْلِمُونَ فِي الصَّلَاةِ.</span><span class="terj" lang="id" dir="ltr">Kaum muslimin bersatu dalam salat.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَبَادَلَ – يَتَبَادَلُ</span><span class="arti">bergantian, berganti-ganti</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَبَادَلَ الْجُنُودُ الْحِرَاسَةَ.</span><span class="terj" lang="id" dir="ltr">Para prajurit bergantian berjaga.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَبَادَلُ الْأَوْلَادُ اللَّعِبَ.</span><span class="terj" lang="id" dir="ltr">Anak-anak bergantian bermain.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَعَلَّقَ – يَتَعَلَّقُ بِ</span><span class="arti">bergantung pada</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَعَلَّقَ الطِّفْلُ بِأُمِّهِ.</span><span class="terj" lang="id" dir="ltr">Anak itu bergantung pada ibunya.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَعَلَّقُ النَّجَاحُ بِالِاجْتِهَادِ.</span><span class="terj" lang="id" dir="ltr">Keberhasilan bergantung pada kesungguhan.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">عَاشَرَ – يُعَاشِرُ</span><span class="arti">bergaul</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">عَاشَرَ الرَّجُلُ جِيرَانَهُ بِالْمَعْرُوفِ.</span><span class="terj" lang="id" dir="ltr">Lelaki itu bergaul dengan tetangganya secara baik.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يُعَاشِرُ الطَّالِبُ أَصْدِقَاءَ صَالِحِينَ.</span><span class="terj" lang="id" dir="ltr">Siswa itu bergaul dengan teman-teman yang saleh.</span></div>
+          </div></li>
+      </ul>
+    </div>
+    <div class="kuis-wrap">
+      <button type="button" class="btn mulai-kuis">Kuis Pertama: Arab → Indonesia (wajib)</button>
+      <div class="kuis" hidden>
+        <div class="kuis-progress"></div>
+        <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
+        <input type="text" class="kuis-input" placeholder="Tulis artinya dalam Bahasa Indonesia...">
+        <button type="button" class="btn kuis-kirim">Kirim</button>
+        <div class="kuis-feedback" hidden></div>
+        <button type="button" class="btn-kembali kuis-batal">Batalkan Kuis</button>
+      </div>
+      <div class="kuis-hasil" hidden></div>
+    </div>
+  </section>
+  <section class="panel" id="hari-7" hidden>
+    <button type="button" class="btn-kembali" id="kembali-ujian">Kembali</button>
+    <div class="isi" id="ujian-intro">
+      <h2 class="judul" lang="ar" dir="rtl">الِاخْتِبَارُ</h2>
+      <div class="ket" id="ujian-info"></div>
+    </div>
+    <div class="kuis-wrap">
+      <button type="button" class="btn" id="mulai-ujian">Mulai Ujian</button>
+      <div class="kuis" id="ujian-area" hidden>
+        <div class="kuis-progress"></div>
+        <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
+        <input type="text" class="kuis-input u-indo" placeholder="Tulis artinya dalam Bahasa Indonesia..." autocomplete="off" autocapitalize="off" spellcheck="false">
+        <input type="text" class="kuis-input ar u-k1" lang="ar" dir="rtl" autocomplete="off" autocapitalize="off" spellcheck="false" hidden>
+        <input type="text" class="kuis-input ar u-k2" lang="ar" dir="rtl" autocomplete="off" autocapitalize="off" spellcheck="false" hidden>
+        <button type="button" class="btn kuis-kirim">Kirim</button>
+        <div class="kuis-feedback" hidden></div>
+        <button type="button" class="btn-kembali kuis-batal">Batalkan Ujian</button>
+      </div>
+      <div class="kuis-hasil" id="ujian-hasil" hidden></div>
+    </div>
+  </section>
+  <section class="panel hari" id="hari-8" data-tombol="buka-hari-8" hidden>
+    <button type="button" class="btn-kembali kembali">Kembali</button>
+    <div class="skor" aria-live="polite">0/4</div>
+    <div class="alat">
+      <button type="button" class="mode">Tampilan: Semua</button>
+      <button type="button" class="tombol-jumlah" aria-pressed="false">Tampilkan Kalimat</button>
+    </div>
+    <div class="isi">
+      <div class="ket">Hari 8 berisi 4 kata tambahan. Kata-kata ini belum termasuk dalam Ujian Hari 7.</div>
+      <div class="legenda"><span><i class="a"></i>Mufrad / Madhi</span><span><i class="b"></i>Jamak / Mudhari'</span></div>
+      <h2 class="judul" lang="ar" dir="rtl">قسم الأفعال</h2>
+      <ul class="daftar">
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">أَنَارَ – يُنِيرُ</span><span class="arti">menyinari</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">أَنَارَتِ الْمَصَابِيحُ الشَّارِعَ لَيْلًا.</span><span class="terj" lang="id" dir="ltr">Lampu-lampu menerangi jalan di malam hari.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">تُنِيرُ الشَّمْسُ الْأَرْضَ نَهَارًا.</span><span class="terj" lang="id" dir="ltr">Matahari menyinari bumi di siang hari.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">تَدَاوَلَ – يَتَدَاوَلُ</span><span class="arti">beredar</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">تَدَاوَلَ الطُّلَّابُ الْكِتَابَ بَيْنَهُمْ.</span><span class="terj" lang="id" dir="ltr">Buku itu beredar dari tangan ke tangan di antara para siswa.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَتَدَاوَلُ النَّاسُ الصُّورَةَ.</span><span class="terj" lang="id" dir="ltr">Gambar itu beredar di antara orang-orang.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">نَفَعَ – يَنْفَعُ</span><span class="arti">berguna</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">نَفَعَ الْعِلْمُ صَاحِبَهُ.</span><span class="terj" lang="id" dir="ltr">Ilmu itu bermanfaat bagi pemiliknya.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَنْفَعُ الدَّوَاءُ الْمَرِيضَ.</span><span class="terj" lang="id" dir="ltr">Obat itu berguna bagi pasien.</span></div>
+          </div></li>
+        <li role="button" tabindex="0" aria-pressed="false"><span class="arab" lang="ar" dir="rtl">اِنْضَمَّ – يَنْضَمُّ إِلَى</span><span class="arti">bergabung</span>
+          <div class="jumlah" dir="rtl">
+            <div class="kal a"><span class="kal-ar" lang="ar">اِنْضَمَّ أَخِي إِلَى النَّادِي.</span><span class="terj" lang="id" dir="ltr">Adikku bergabung dengan klub.</span></div>
+            <div class="kal b"><span class="kal-ar" lang="ar">يَنْضَمُّ الْوَلَدُ إِلَى الْفَرِيقِ.</span><span class="terj" lang="id" dir="ltr">Anak itu bergabung dengan tim.</span></div>
+          </div></li>
+      </ul>
+    </div>
+    <div class="kuis-wrap">
+      <button type="button" class="btn mulai-kuis">Kuis Pertama: Arab → Indonesia (wajib)</button>
       <div class="kuis" hidden>
         <div class="kuis-progress"></div>
         <div class="kuis-soal arab" lang="ar" dir="rtl"></div>
@@ -459,7 +817,7 @@
 <script>
   var menu = document.getElementById('menu');
   var urutan = [['', 'Semua'], ['tutup-arab', 'Tanpa Arab'], ['tutup-indo', 'Tanpa Indo']];
-  var urutanHari = ['hari-1', 'hari-2', 'hari-3'];
+  var urutanHari = ['hari-1', 'hari-2', 'hari-3', 'hari-4', 'hari-5', 'hari-6', 'hari-7', 'hari-8'];
 
   function kunciPrefix(id) { return 'mufradat-kuis-' + id; }
 
@@ -471,7 +829,23 @@
   }
   function sudahLengkap(id) { return sudahLulus(id) && sudahLulus2(id); }
 
+  // Total mufradat: kata dihitung dikuasai jika kedua kuis harinya sudah lulus
+  function perbaruiTotal() {
+    var el = document.getElementById('total-mufradat');
+    if (!el) return;
+    var total = 0, dikuasai = 0;
+    urutanHari.forEach(function (id) {
+      if (id === 'hari-7') return;
+      var n = document.querySelectorAll('#' + id + ' .daftar li').length;
+      total += n;
+      if (sudahLengkap(id)) dikuasai += n;
+    });
+    el.textContent = dikuasai + '/' + total;
+    el.classList.toggle('penuh', total > 0 && dikuasai === total);
+  }
+
   function perbaruiKunci() {
+    perbaruiTotal();
     urutanHari.forEach(function (id, i) {
       var tombol = document.getElementById('buka-' + id);
       if (!tombol) return;
@@ -480,7 +854,19 @@
       var terbuka = sudahLengkap(prasyarat);
       tombol.disabled = !terbuka;
       var catatan = document.getElementById('catatan-' + id);
-      if (catatan) catatan.hidden = terbuka;
+      if (catatan) {
+        catatan.hidden = terbuka;
+        if (!terbuka) {
+          if (prasyarat === 'hari-7') {
+            catatan.textContent = '🔒 Lulus Ujian Hari 7 dulu';
+          } else {
+            var belum = [];
+            if (!sudahLulus(prasyarat)) belum.push('Kuis Pertama (Arab → Indonesia)');
+            if (!sudahLulus2(prasyarat)) belum.push('Kuis Kedua (Indonesia → Arab)');
+            catatan.textContent = '🔒 Hari ' + prasyarat.replace('hari-', '') + ' belum selesai: ' + belum.join(' dan ');
+          }
+        }
+      }
     });
   }
 
@@ -499,10 +885,56 @@
       .trim().replace(/\s+/g, ' ');
   }
 
+  var ALIAS = {
+    'bangga': ['berbangga'],
+    'air liur': ['liur'],
+    'buang air besar': ['bab'],
+    'berfokus pada': ['berfokus', 'fokus pada', 'fokus'],
+    'bergantung pada': ['bergantung'],
+    'beradab': ['bersikap sopan', 'sopan'],
+    'bercahaya': ['bersinar'],
+    'menyinari': ['menerangi'],
+    'kelopak': ['kelopak mata']
+  };
+
+  // true jika a dan b sama, atau beda tepat satu huruf (salah ketik)
+  function beda1(a, b) {
+    if (a === b) return true;
+    if (Math.abs(a.length - b.length) > 1) return false;
+    var i = 0;
+    while (i < a.length && i < b.length && a[i] === b[i]) i++;
+    if (a.length === b.length) return a.slice(i + 1) === b.slice(i + 1);
+    if (a.length > b.length) return a.slice(i + 1) === b.slice(i);
+    return a.slice(i) === b.slice(i + 1);
+  }
+
   function cekJawaban(arti, jawaban) {
-    var varian = arti.split(/[\/,]/).map(normalisasi);
-    varian.push(normalisasi(arti));
-    return varian.indexOf(normalisasi(jawaban)) !== -1;
+    var j = normalisasi(jawaban);
+    var varian = [];
+    arti.split(/[\/,]/).concat([arti]).forEach(function (v) {
+      var n = normalisasi(v);
+      if (n) varian.push(n);
+      var tk = normalisasi(v.replace(/\([^)]*\)/g, ''));
+      if (tk) varian.push(tk);
+    });
+    varian.slice().forEach(function (v) {
+      (ALIAS[v] || []).forEach(function (a) { varian.push(a); });
+    });
+    return varian.some(function (v) {
+      return v === j || (v.length >= 6 && beda1(v, j));
+    });
+  }
+
+  // Cocokkan fi'il mudhari': huruf jar di akhir (mis. فِي، بِ، إِلَى) boleh ditulis atau tidak
+  function samaJar(benar, jawab) {
+    var n = function (x) {
+      return x.normalize('NFC').replace(/[\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g, '')
+        .replace(/[\u0652\u06E1]/g, '').replace(/\s+/g, ' ').trim();
+    };
+    var b = n(benar), j = n(jawab);
+    if (b === j) return true;
+    var kata = b.split(' ');
+    return kata.length > 1 && kata.slice(0, -1).join(' ') === j;
   }
 
 
@@ -555,6 +987,18 @@
     } else if (jenis === 'centang') {
       nada(c, 740, t, 0.09, 'sine', 0.1);
     }
+  }
+
+  var lencanaEl = document.createElement('div');
+  lencanaEl.className = 'lencana-skor';
+  lencanaEl.setAttribute('aria-live', 'polite');
+  lencanaEl.hidden = true;
+  document.body.appendChild(lencanaEl);
+  // lencana(daftarHasil) menampilkan benar/dijawab; lencana(null) menyembunyikannya
+  function lencana(arr) {
+    if (!arr) { lencanaEl.hidden = true; return; }
+    lencanaEl.textContent = arr.filter(function (h) { return h.benar; }).length + '/' + arr.length;
+    lencanaEl.hidden = false;
   }
 
   (function () {
@@ -615,13 +1059,14 @@
       isi.classList.remove('tutup-arab', 'tutup-indo');
       no = (no + 1) % urutan.length;
       if (urutan[no][0]) isi.classList.add(urutan[no][0]);
-      mode.textContent = urutan[no][1];
+      mode.textContent = 'Tampilan: ' + urutan[no][1];
     });
 
     if (tombolJumlah) {
       tombolJumlah.addEventListener('click', function () {
         var on = isi.classList.toggle('tampil-jumlah');
         tombolJumlah.setAttribute('aria-pressed', on ? 'true' : 'false');
+        tombolJumlah.textContent = on ? 'Sembunyikan Kalimat' : 'Tampilkan Kalimat';
       });
     }
 
@@ -662,6 +1107,7 @@
       }
 
       function tampilkanSoal() {
+        lencana(hasil);
         var soal = urutanSoal[idx];
         kuisProgress.textContent = 'Soal ' + (idx + 1) + '/' + urutanSoal.length;
         kuisProgress.style.setProperty('--p', ((idx + 1) / urutanSoal.length * 100) + '%');
@@ -684,6 +1130,7 @@
         var benar = cekJawaban(soal.arti, jawabanUser);
         bunyi(benar ? 'benar' : 'salah');
         hasil.push({ arab: soal.arab, arti: soal.arti, jawaban: jawabanUser, benar: benar });
+        lencana(hasil);
 
         menunggu = true;
         kuisInput.disabled = true;
@@ -707,6 +1154,7 @@
       }
 
       function batalkan() {
+        lencana(null);
         if (timerLanjut) { clearTimeout(timerLanjut); timerLanjut = null; }
         kuisArea.hidden = true;
         kuisHasil.hidden = true;
@@ -725,6 +1173,7 @@
       }
 
       function selesai(lulus) {
+        lencana(null);
         kuisArea.hidden = true;
         kuisHasil.hidden = false;
         isi.hidden = false;
@@ -744,7 +1193,7 @@
         if (lulus) {
           localStorage.setItem(kunciPrefix(hari.id), '1');
           ringkasan = '✅ Semua benar (' + jumlahBenar + '/' + hasil.length + ')! ' +
-            (sudahLulus2(hari.id) ? 'Hari berikutnya sudah terbuka.' : 'Tinggal Kuis Tambahan (Indonesia → Arab) untuk membuka hari berikutnya.');
+            (sudahLulus2(hari.id) ? 'Hari berikutnya sudah terbuka.' : 'Tinggal Kuis Kedua (Indonesia → Arab) untuk membuka hari berikutnya.');
           tombolMulai.textContent = 'Ulangi Kuis';
           if (sudahLulus2(hari.id)) tombol.classList.add('selesai');
           perbaruiKunci();
@@ -768,7 +1217,7 @@
       var btnT = document.createElement('button');
       btnT.type = 'button';
       btnT.className = 'btn btn-tambahan';
-      btnT.textContent = sudahLulus2(hari.id) ? 'Ulangi Kuis Tambahan' : 'Kuis Tambahan: Indonesia → Arab (5 soal, wajib)';
+      btnT.textContent = sudahLulus2(hari.id) ? 'Ulangi Kuis Kedua' : 'Kuis Kedua: Indonesia → Arab (' + Math.min(JUMLAH_TAMBAHAN, barisan.length) + ' soal, wajib)';
       tombolMulai.after(btnT);
 
       var areaT = document.createElement('div');
@@ -776,6 +1225,7 @@
       areaT.hidden = true;
       areaT.innerHTML =
         '<div class="kuis-progress"></div>' +
+        '<div class="ket">Tulis dengan harakat lengkap (sukun tidak wajib). Huruf jar seperti فِي / بِ / إِلَى boleh ditulis atau tidak.</div>' +
         '<div class="kuis-soal indo"></div>' +
         '<input type="text" class="kuis-input ar k1" lang="ar" dir="rtl" autocomplete="off" autocapitalize="off" spellcheck="false">' +
         '<input type="text" class="kuis-input ar k2" lang="ar" dir="rtl" autocomplete="off" autocapitalize="off" spellcheck="false">' +
@@ -841,8 +1291,8 @@
         var i = -1;
         q.pasang.forEach(function (pp, n) { if (i < 0 && normArab(pp[0]) === a) i = n; });
         var b2 = i >= 0
-          ? normArab(q.pasang[i][1]) === b
-          : q.pasang.some(function (pp) { return normArab(pp[1]) === b; });
+          ? samaJar(q.pasang[i][1], b)
+          : q.pasang.some(function (pp) { return samaJar(pp[1], b); });
         return { b1: i >= 0, b2: b2 };
       }
 
@@ -867,6 +1317,7 @@
       }
 
       function tampilT() {
+        lencana(hasilListT);
         var q = soalT[idxT];
         var label = q.tipe === 'isim' ? ' — Isim: mufrad & jamak'
           : q.tipe === 'fiil' ? " — Fi'il: madhi & mudhari'" : '';
@@ -900,6 +1351,7 @@
         var benar = r.b1 && r.b2;
         bunyi(benar ? 'benar' : 'salah');
         hasilListT.push({ q: q, j1: j1, j2: j2, benar: benar });
+        lencana(hasilListT);
 
         menungguT = true;
         tIn1.disabled = true; tIn2.disabled = true;
@@ -918,6 +1370,7 @@
       }
 
       function pulihT() {
+        lencana(null);
         areaT.hidden = true;
         isi.hidden = false; skor.hidden = false; alat.hidden = false;
         tombolMulai.hidden = false;
@@ -945,13 +1398,13 @@
         if (lulusT) {
           localStorage.setItem(kunciPrefix(hari.id) + '-indoarab', '1');
           ringkasT = '✅ Semua benar (' + n + '/' + hasilListT.length + ')! ' +
-            (sudahLulus(hari.id) ? 'Hari berikutnya sudah terbuka.' : 'Tinggal Kuis Arab → Indonesia untuk membuka hari berikutnya.');
-          btnT.textContent = 'Ulangi Kuis Tambahan';
+            (sudahLulus(hari.id) ? 'Hari berikutnya sudah terbuka.' : 'Tinggal Kuis Pertama (Arab → Indonesia) untuk membuka hari berikutnya.');
+          btnT.textContent = 'Ulangi Kuis Kedua';
           if (sudahLulus(hari.id)) tombol.classList.add('selesai');
           perbaruiKunci();
         } else {
           ringkasT = '❌ Benar ' + n + '/' + hasilListT.length + '. Coba lagi, soal akan diacak ulang.';
-          btnT.textContent = 'Coba Lagi Kuis Tambahan';
+          btnT.textContent = 'Coba Lagi Kuis Kedua';
         }
         hasilT.hidden = false;
         hasilT.innerHTML = ringkasT + '<div class="kuis-rekap-list">' + rekap + '</div>';
@@ -968,6 +1421,248 @@
       });
     }
   });
+
+  // Ujian Hari 7: soal acak dari seluruh kata Hari 1-6
+  (function () {
+    var N_ARAB = 20, N_INDO = 10, KKM_PERSEN = 100;
+    var HARI_UJIAN = ['hari-1', 'hari-2', 'hari-3', 'hari-4', 'hari-5', 'hari-6'];
+    var ID = 'hari-7';
+    var bagian = document.getElementById('hari-7');
+    var tombolBuka = document.getElementById('buka-hari-7');
+    if (!bagian || !tombolBuka) return;
+
+    var intro = document.getElementById('ujian-intro');
+    var info = document.getElementById('ujian-info');
+    var btnMulai = document.getElementById('mulai-ujian');
+    var area = document.getElementById('ujian-area');
+    var hasilEl = document.getElementById('ujian-hasil');
+    var tProgress = area.querySelector('.kuis-progress');
+    var tSoal = area.querySelector('.kuis-soal');
+    var inIndo = area.querySelector('.u-indo');
+    var in1 = area.querySelector('.u-k1');
+    var in2 = area.querySelector('.u-k2');
+    var tKirim = area.querySelector('.kuis-kirim');
+    var tFeedback = area.querySelector('.kuis-feedback');
+    var tBatal = area.querySelector('.kuis-batal');
+
+    function potong(x) { return x.trim(); }
+    function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    function ar(x) { return '<span class="arab" lang="ar" dir="rtl" style="font-size:1.3rem">' + escapeHtml(x) + '</span>'; }
+
+    function urai(teks) {
+      teks = teks.trim();
+      var bag = teks.split(/\s+\u062C\u0640\s+/);
+      if (bag.length === 2) {
+        return { tipe: 'isim', teks: teks, k1: [potong(bag[0])], k2: bag[1].split('\u060C').map(potong).filter(Boolean) };
+      }
+      if (teks.indexOf('\u2013') !== -1) {
+        var pasang = teks.split('\u060C').map(function (pp) {
+          var x = pp.split('\u2013');
+          return [potong(x[0]), potong(x[1])];
+        });
+        return { tipe: 'fiil', teks: teks, pasang: pasang };
+      }
+      return { tipe: 'tunggal', teks: teks, k1: [teks], k2: [] };
+    }
+
+    function normArab(x) {
+      return x.normalize('NFC')
+        .replace(/[\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g, '')
+        .replace(/[\u0652\u06E1]/g, '')
+        .replace(/\s+/g, ' ').trim();
+    }
+
+    function periksa(q, j1, j2) {
+      var a = normArab(j1), b = normArab(j2);
+      if (q.tipe === 'tunggal') return { b1: normArab(q.k1[0]) === a, b2: true };
+      if (q.tipe === 'isim') {
+        return { b1: normArab(q.k1[0]) === a, b2: q.k2.some(function (x) { return normArab(x) === b; }) };
+      }
+      var i = -1;
+      q.pasang.forEach(function (pp, n) { if (i < 0 && normArab(pp[0]) === a) i = n; });
+      var b2 = i >= 0
+        ? samaJar(q.pasang[i][1], b)
+        : q.pasang.some(function (pp) { return samaJar(pp[1], b); });
+      return { b1: i >= 0, b2: b2 };
+    }
+
+    var semua = [];
+    HARI_UJIAN.forEach(function (id) {
+      document.querySelectorAll('#' + id + ' .daftar li').forEach(function (li) {
+        var q = urai(li.querySelector('.arab').textContent);
+        q.arti = li.querySelector('.arti').textContent.trim();
+        semua.push(q);
+      });
+    });
+
+    var TOTAL = N_ARAB + N_INDO;
+    var MINIMAL = Math.ceil(TOTAL * KKM_PERSEN / 100);
+    info.innerHTML = '<b>Ujian Hari 1–6.</b> ' + N_ARAB + ' soal Arab → Indonesia, lalu ' + N_INDO +
+      ' soal Indonesia → Arab (' + TOTAL + ' soal dari ' + semua.length + ' kata). Soal diacak setiap kali. ' +
+      'Lulus jika semua soal benar (' + TOTAL + '/' + TOTAL + '). Lulus ujian membuka Hari 8. ' +
+      'Jawaban Arab harus berharakat lengkap (sukun boleh dihilangkan; huruf jar boleh ditulis atau tidak). ' +
+      'Jawaban Indonesia: salah ketik satu huruf pada kata panjang masih diterima.';
+
+    var soal = [], idx = 0, hasil = [], menunggu = false, timer = null;
+
+    function labelMulai() {
+      btnMulai.textContent = sudahLengkap(ID) ? 'Ulangi Ujian' : 'Mulai Ujian (' + TOTAL + ' soal)';
+    }
+    labelMulai();
+    if (sudahLengkap(ID)) {
+      tombolBuka.classList.add('selesai');
+      hasilEl.hidden = false;
+      hasilEl.textContent = 'Ujian sudah pernah lulus. Boleh diulang kapan saja.';
+    }
+
+    function siapkan() {
+      var isim = acak(semua.filter(function (q) { return q.tipe !== 'fiil'; }));
+      var fiil = acak(semua.filter(function (q) { return q.tipe === 'fiil'; }));
+      var a = N_ARAB / 2, b = N_INDO / 2;
+      var A = isim.slice(0, a).concat(fiil.slice(0, a));
+      var B = isim.slice(a, a + b).concat(fiil.slice(a, a + b));
+      return acak(A).map(function (q) { return { mode: 'ai', q: q }; })
+        .concat(acak(B).map(function (q) { return { mode: 'ia', q: q }; }));
+    }
+
+    function mulai() {
+      soal = siapkan();
+      idx = 0; hasil = [];
+      hasilEl.hidden = true; hasilEl.textContent = '';
+      intro.hidden = true;
+      btnMulai.hidden = true;
+      area.hidden = false;
+      tampil();
+    }
+
+    function tampil() {
+      lencana(hasil);
+      var s = soal[idx], q = s.q;
+      var nomor = s.mode === 'ai' ? idx + 1 : idx + 1 - N_ARAB;
+      var jumlah = s.mode === 'ai' ? N_ARAB : N_INDO;
+      tProgress.textContent = 'Bagian ' + (s.mode === 'ai' ? '1 (Arab → Indonesia)' : '2 (Indonesia → Arab)') +
+        ' — Soal ' + nomor + '/' + jumlah;
+      tProgress.style.setProperty('--p', ((idx + 1) / soal.length * 100) + '%');
+      if (s.mode === 'ai') {
+        tSoal.className = 'kuis-soal arab';
+        tSoal.setAttribute('lang', 'ar'); tSoal.setAttribute('dir', 'rtl');
+        tSoal.textContent = q.teks;
+        inIndo.hidden = false; in1.hidden = true; in2.hidden = true;
+      } else {
+        tSoal.className = 'kuis-soal indo';
+        tSoal.removeAttribute('lang'); tSoal.removeAttribute('dir');
+        tSoal.textContent = q.arti;
+        inIndo.hidden = true; in1.hidden = false; in2.hidden = (q.tipe === 'tunggal');
+        in1.placeholder = q.tipe === 'isim' ? 'Mufrad (dengan harakat)...'
+          : q.tipe === 'fiil' ? "Fi'il madhi (dengan harakat)..." : 'Tulis kata Arab (dengan harakat)...';
+        in2.placeholder = q.tipe === 'isim' ? 'Jamak (dengan harakat)...' : "Fi'il mudhari' (dengan harakat)...";
+      }
+      [inIndo, in1, in2].forEach(function (el) {
+        el.value = ''; el.disabled = false; el.classList.remove('benar', 'salah');
+      });
+      tFeedback.hidden = true; tFeedback.textContent = ''; tFeedback.classList.remove('benar', 'salah');
+      menunggu = false;
+      (s.mode === 'ai' ? inIndo : in1).focus();
+    }
+
+    function kirim() {
+      if (menunggu) return;
+      var s = soal[idx], q = s.q, benar, jawab;
+      if (s.mode === 'ai') {
+        jawab = inIndo.value.trim();
+        if (jawab === '') { inIndo.focus(); return; }
+        benar = cekJawaban(q.arti, jawab);
+        inIndo.classList.add(benar ? 'benar' : 'salah');
+        tFeedback.textContent = benar ? '✅ Benar! (' + q.arti + ')' : '❌ Salah. Jawaban benar: ' + q.arti;
+      } else {
+        if (in1.value.trim() === '') { in1.focus(); return; }
+        if (!in2.hidden && in2.value.trim() === '') { in2.focus(); return; }
+        var j1 = in1.value.trim(), j2 = in2.hidden ? '' : in2.value.trim();
+        var r = periksa(q, j1, j2);
+        benar = r.b1 && r.b2;
+        jawab = j2 ? j1 + ' / ' + j2 : j1;
+        in1.classList.add(r.b1 ? 'benar' : 'salah');
+        if (!in2.hidden) in2.classList.add(r.b2 ? 'benar' : 'salah');
+        tFeedback.innerHTML = benar ? '✅ Benar!' : '❌ Salah. Jawaban benar: ' + ar(q.teks);
+      }
+      bunyi(benar ? 'benar' : 'salah');
+      hasil.push({ mode: s.mode, q: q, jawab: jawab, benar: benar });
+      lencana(hasil);
+      menunggu = true;
+      [inIndo, in1, in2].forEach(function (el) { el.disabled = true; });
+      tFeedback.hidden = false;
+      tFeedback.classList.toggle('benar', benar);
+      tFeedback.classList.toggle('salah', !benar);
+      timer = setTimeout(function () {
+        timer = null;
+        idx++;
+        if (idx >= soal.length) selesai(); else tampil();
+      }, benar ? 1000 : 2400);
+    }
+
+    function pulih() {
+      lencana(null);
+      area.hidden = true;
+      intro.hidden = false;
+      btnMulai.hidden = false;
+      menunggu = false;
+    }
+
+    function batal() {
+      if (timer) { clearTimeout(timer); timer = null; }
+      pulih();
+    }
+
+    function selesai() {
+      pulih();
+      var n = hasil.filter(function (h) { return h.benar; }).length;
+      var nA = hasil.filter(function (h) { return h.benar && h.mode === 'ai'; }).length;
+      var nI = hasil.filter(function (h) { return h.benar && h.mode === 'ia'; }).length;
+      var lulus = n >= MINIMAL;
+      bunyi(lulus ? 'lulus' : 'gagal');
+      var rekap = hasil.map(function (h) {
+        var q = h.q;
+        if (h.mode === 'ai') {
+          return h.benar
+            ? '<div class="kuis-rekap benar">✅ ' + ar(q.teks) + ' — ' + escapeHtml(q.arti) + '</div>'
+            : '<div class="kuis-rekap salah">❌ ' + ar(q.teks) + ' — jawabanmu: "' + escapeHtml(h.jawab || '(kosong)') + '", benar: ' + escapeHtml(q.arti) + '</div>';
+        }
+        return h.benar
+          ? '<div class="kuis-rekap benar">✅ ' + escapeHtml(q.arti) + ' — ' + ar(q.teks) + '</div>'
+          : '<div class="kuis-rekap salah">❌ ' + escapeHtml(q.arti) + ' — jawabanmu: ' + ar(h.jawab) + ', benar: ' + ar(q.teks) + '</div>';
+      }).join('');
+      var nilai = Math.round(n / hasil.length * 100);
+      var ringkas = (lulus ? '✅ Lulus! ' : '❌ Belum lulus. ') + 'Nilai ' + nilai + ' (' + n + '/' + hasil.length + ' benar; harus semua benar). ' +
+        'Arab → Indonesia: ' + nA + '/' + N_ARAB + ' · Indonesia → Arab: ' + nI + '/' + N_INDO + '. ' +
+        (lulus ? 'Hari 8 sudah terbuka.' : 'Coba lagi, soal akan diacak ulang.');
+      if (lulus) {
+        localStorage.setItem(kunciPrefix(ID), '1');
+        localStorage.setItem(kunciPrefix(ID) + '-indoarab', '1');
+        tombolBuka.classList.add('selesai');
+        perbaruiKunci();
+      }
+      labelMulai();
+      if (!lulus) btnMulai.textContent = 'Coba Lagi';
+      hasilEl.hidden = false;
+      hasilEl.innerHTML = ringkas + '<div class="kuis-rekap-list">' + rekap + '</div>';
+    }
+
+    tombolBuka.addEventListener('click', function () {
+      menu.hidden = true; bagian.hidden = false; window.scrollTo(0, 0);
+    });
+    document.getElementById('kembali-ujian').addEventListener('click', function () {
+      batal();
+      bagian.hidden = true; menu.hidden = false; window.scrollTo(0, 0);
+    });
+    btnMulai.addEventListener('click', mulai);
+    tKirim.addEventListener('click', kirim);
+    tBatal.addEventListener('click', batal);
+    inIndo.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); kirim(); } });
+    in1.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); if (in2.hidden) kirim(); else in2.focus(); }
+    });
+    in2.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); kirim(); } });
+  })();
 
   perbaruiKunci();
 </script>
