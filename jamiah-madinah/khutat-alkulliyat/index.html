@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>خطط الكليات</title>
+<style>
+  :root {
+    --navy: #0D173B;
+    --navy-dark: #1A202C;
+    --navy-panel: #142050;
+    --teal: #4AB7E0;
+    --coral: #ED8936;
+    --line: rgba(74, 183, 224, .28);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--navy); }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%) fixed;
+  }
+  .wrap { width: min(1120px, 100% - 2rem); margin-inline: auto; padding-block: 1.25rem; }
+  .panel {
+    background: var(--navy-panel);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--teal);
+    border-radius: 8px;
+    min-height: calc(100vh - 2.5rem); padding: 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  }
+  .btn-kembali {
+    align-self: flex-end; /* halaman RTL: flex-end = kiri */
+    display: inline-block; padding: .5rem 1rem; border-radius: 6px;
+    border: 1px solid var(--teal); color: var(--teal); text-decoration: none;
+    font: 600 .95rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  }
+  .btn-kembali:hover { background: rgba(74, 183, 224, .12); }
+  .btn {
+    display: inline-block; padding: .65rem 1.25rem; border-radius: 6px;
+    font: 600 1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    background: var(--coral); color: var(--navy-dark); text-decoration: none;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .judul { color: var(--teal); font: 700 1.75rem/1.5 "Segoe UI", "Geeza Pro", system-ui, sans-serif; text-align: center; }
+  label.btn, label.btn-kembali { cursor: pointer; }
+  .toggle { position: absolute; opacity: 0; pointer-events: none; }
+  #dalil { display: none; }
+  .toggle:checked ~ #khutat { display: none; }
+  .toggle:checked ~ #dalil { display: flex; }
+  .dalil-frame { width: 100%; flex: 1; min-height: 75vh; border: 0; border-radius: 6px; background: #fff; }
+  .toggle:focus-visible ~ .panel label { outline: 3px solid var(--teal); outline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <input type="checkbox" id="buka-dalil" class="toggle" aria-label="الدليل التعريفي لبرنامج بكالوريوس الشريعة">
+  <section class="panel" id="khutat">
+    <a class="btn-kembali" href="../">Kembali</a>
+    <h1 class="judul">خطط الكليات</h1>
+    <label class="btn" for="buka-dalil">الدليل التعريفي لبرنامج بكالوريوس الشريعة</label>
+  </section>
+  <section class="panel" id="dalil">
+    <label class="btn-kembali" for="buka-dalil">Kembali</label>
+    <iframe class="dalil-frame" title="الدليل التعريفي لبرنامج بكالوريوس الشريعة" src="https://drive.google.com/file/d/1lIAg9mm08QgSR4QfmjUYTMCf4r2GcYCh/preview" loading="lazy" allowfullscreen></iframe>
+  </section>
+</main>
+</body>
+</html>
