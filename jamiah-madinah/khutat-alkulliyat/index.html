@@ -42,11 +42,17 @@
   }
   .btn:hover { filter: brightness(1.08); }
   .judul { color: var(--teal); font: 700 1.75rem/1.5 "Segoe UI", "Geeza Pro", system-ui, sans-serif; text-align: center; }
+  .judul-kecil { font-size: 1.3rem; }
   label.btn, label.btn-kembali { cursor: pointer; }
   .toggle { position: absolute; opacity: 0; pointer-events: none; }
-  #dalil { display: none; }
+  #dalil, #tausif, #quran, #hasub, #dawah, #syariah { display: none; }
   .toggle:checked ~ #khutat { display: none; }
-  .toggle:checked ~ #dalil { display: flex; }
+  #buka-dalil:checked ~ #dalil { display: flex; }
+  #buka-tausif:checked ~ #tausif { display: flex; }
+  #buka-quran:checked ~ #quran { display: flex; }
+  #buka-hasub:checked ~ #hasub { display: flex; }
+  #buka-dawah:checked ~ #dawah { display: flex; }
+  #buka-syariah:checked ~ #syariah { display: flex; }
   .dalil-frame { width: 100%; flex: 1; min-height: 75vh; border: 0; border-radius: 6px; background: #fff; }
   .toggle:focus-visible ~ .panel label { outline: 3px solid var(--teal); outline-offset: 3px; }
   :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
@@ -55,14 +61,56 @@
 <body>
 <main class="wrap">
   <input type="checkbox" id="buka-dalil" class="toggle" aria-label="الدليل التعريفي لبرنامج بكالوريوس الشريعة">
+  <input type="checkbox" id="buka-tausif" class="toggle" aria-label="توصيف برنامج بكالوريوس الأنظمة - النموذج الجديد 2023">
+  <input type="checkbox" id="buka-quran" class="toggle" aria-label="توصيف برنامج بكالوريوس القرآن الكريم والدراسات الإسلامية-1446هـ">
+  <input type="checkbox" id="buka-hasub" class="toggle" aria-label="خطة الطالب في كلية الحاسوب">
+  <input type="checkbox" id="buka-dawah" class="toggle" aria-label="خطة الطالب في كلية الدعوة">
+  <input type="checkbox" id="buka-syariah" class="toggle" aria-label="خطة الطالب في كلية الشريعة">
   <section class="panel" id="khutat">
     <a class="btn-kembali" href="../">Kembali</a>
     <h1 class="judul">خطط الكليات</h1>
     <label class="btn" for="buka-dalil">الدليل التعريفي لبرنامج بكالوريوس الشريعة</label>
+    <label class="btn" for="buka-tausif">توصيف برنامج بكالوريوس الأنظمة - النموذج الجديد 2023</label>
+    <label class="btn" for="buka-quran">توصيف برنامج بكالوريوس القرآن الكريم والدراسات الإسلامية-1446هـ</label>
+    <label class="btn" for="buka-hasub">خطة الطالب في كلية الحاسوب</label>
+    <label class="btn" for="buka-dawah">خطة الطالب في كلية الدعوة</label>
+    <label class="btn" for="buka-syariah">خطة الطالب في كلية الشريعة</label>
   </section>
   <section class="panel" id="dalil">
     <label class="btn-kembali" for="buka-dalil">Kembali</label>
+    <h2 class="judul judul-kecil">الدليل التعريفي لبرنامج بكالوريوس الشريعة</h2>
+    <a class="btn" href="https://drive.google.com/uc?export=download&id=1lIAg9mm08QgSR4QfmjUYTMCf4r2GcYCh" target="_blank" rel="noopener">Unduh</a>
     <iframe class="dalil-frame" title="الدليل التعريفي لبرنامج بكالوريوس الشريعة" src="https://drive.google.com/file/d/1lIAg9mm08QgSR4QfmjUYTMCf4r2GcYCh/preview" loading="lazy" allowfullscreen></iframe>
+  </section>
+  <section class="panel" id="tausif">
+    <label class="btn-kembali" for="buka-tausif">Kembali</label>
+    <h2 class="judul judul-kecil">توصيف برنامج بكالوريوس الأنظمة - النموذج الجديد 2023</h2>
+    <a class="btn" href="https://drive.google.com/uc?export=download&id=1Z2FoHkRp5W2AW6yt5-sfrcIgeYYYGFlX" target="_blank" rel="noopener">Unduh</a>
+    <iframe class="dalil-frame" title="توصيف برنامج بكالوريوس الأنظمة - النموذج الجديد 2023" src="https://drive.google.com/file/d/1Z2FoHkRp5W2AW6yt5-sfrcIgeYYYGFlX/preview" loading="lazy" allowfullscreen></iframe>
+  </section>
+  <section class="panel" id="quran">
+    <label class="btn-kembali" for="buka-quran">Kembali</label>
+    <h2 class="judul judul-kecil">توصيف برنامج بكالوريوس القرآن الكريم والدراسات الإسلامية-1446هـ</h2>
+    <a class="btn" href="https://drive.google.com/uc?export=download&id=1MkHX1Tzqidbi8-JzehlnGZNb2PzY1Goi" target="_blank" rel="noopener">Unduh</a>
+    <iframe class="dalil-frame" title="توصيف برنامج بكالوريوس القرآن الكريم والدراسات الإسلامية-1446هـ" src="https://drive.google.com/file/d/1MkHX1Tzqidbi8-JzehlnGZNb2PzY1Goi/preview" loading="lazy" allowfullscreen></iframe>
+  </section>
+  <section class="panel" id="hasub">
+    <label class="btn-kembali" for="buka-hasub">Kembali</label>
+    <h2 class="judul judul-kecil">خطة الطالب في كلية الحاسوب</h2>
+    <a class="btn" href="https://drive.google.com/uc?export=download&id=1pLqKSoKnNi2iqRD_mXzaGtCY_Ru7qGv4" target="_blank" rel="noopener">Unduh</a>
+    <iframe class="dalil-frame" title="خطة الطالب في كلية الحاسوب" src="https://drive.google.com/file/d/1pLqKSoKnNi2iqRD_mXzaGtCY_Ru7qGv4/preview" loading="lazy" allowfullscreen></iframe>
+  </section>
+  <section class="panel" id="dawah">
+    <label class="btn-kembali" for="buka-dawah">Kembali</label>
+    <h2 class="judul judul-kecil">خطة الطالب في كلية الدعوة</h2>
+    <a class="btn" href="https://drive.google.com/uc?export=download&id=1wRougAcyfTttN4hVYNm4Q5Tb43czvN1x" target="_blank" rel="noopener">Unduh</a>
+    <iframe class="dalil-frame" title="خطة الطالب في كلية الدعوة" src="https://drive.google.com/file/d/1wRougAcyfTttN4hVYNm4Q5Tb43czvN1x/preview" loading="lazy" allowfullscreen></iframe>
+  </section>
+  <section class="panel" id="syariah">
+    <label class="btn-kembali" for="buka-syariah">Kembali</label>
+    <h2 class="judul judul-kecil">خطة الطالب في كلية الشريعة</h2>
+    <a class="btn" href="https://drive.google.com/uc?export=download&id=1RDyq2NpVf-yWUYNjErj8LO37lYPAcC2l" target="_blank" rel="noopener">Unduh</a>
+    <iframe class="dalil-frame" title="خطة الطالب في كلية الشريعة" src="https://drive.google.com/file/d/1RDyq2NpVf-yWUYNjErj8LO37lYPAcC2l/preview" loading="lazy" allowfullscreen></iframe>
   </section>
 </main>
 </body>
