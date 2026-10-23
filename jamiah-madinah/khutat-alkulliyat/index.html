@@ -45,7 +45,7 @@
   .judul-kecil { font-size: 1.3rem; }
   label.btn, label.btn-kembali { cursor: pointer; }
   .toggle { position: absolute; opacity: 0; pointer-events: none; }
-  #dalil, #tausif, #quran, #hasub, #dawah, #syariah { display: none; }
+  #dalil, #tausif, #quran, #hasub, #dawah, #syariah, #kquran, #lughah, #ulum { display: none; }
   .toggle:checked ~ #khutat { display: none; }
   #buka-dalil:checked ~ #dalil { display: flex; }
   #buka-tausif:checked ~ #tausif { display: flex; }
@@ -53,6 +53,9 @@
   #buka-hasub:checked ~ #hasub { display: flex; }
   #buka-dawah:checked ~ #dawah { display: flex; }
   #buka-syariah:checked ~ #syariah { display: flex; }
+  #buka-kquran:checked ~ #kquran { display: flex; }
+  #buka-lughah:checked ~ #lughah { display: flex; }
+  #buka-ulum:checked ~ #ulum { display: flex; }
   .dalil-frame { width: 100%; flex: 1; min-height: 75vh; border: 0; border-radius: 6px; background: #fff; }
   .toggle:focus-visible ~ .panel label { outline: 3px solid var(--teal); outline-offset: 3px; }
   :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
@@ -66,6 +69,9 @@
   <input type="checkbox" id="buka-hasub" class="toggle" aria-label="خطة الطالب في كلية الحاسوب">
   <input type="checkbox" id="buka-dawah" class="toggle" aria-label="خطة الطالب في كلية الدعوة">
   <input type="checkbox" id="buka-syariah" class="toggle" aria-label="خطة الطالب في كلية الشريعة">
+  <input type="checkbox" id="buka-kquran" class="toggle" aria-label="خطة الطالب في كلية القرآن">
+  <input type="checkbox" id="buka-lughah" class="toggle" aria-label="خطة الطالب في كلية اللغة">
+  <input type="checkbox" id="buka-ulum" class="toggle" aria-label="خطة الطالب في كلية العلوم">
   <section class="panel" id="khutat">
     <a class="btn-kembali" href="../">Kembali</a>
     <h1 class="judul">خطط الكليات</h1>
@@ -75,6 +81,9 @@
     <label class="btn" for="buka-hasub">خطة الطالب في كلية الحاسوب</label>
     <label class="btn" for="buka-dawah">خطة الطالب في كلية الدعوة</label>
     <label class="btn" for="buka-syariah">خطة الطالب في كلية الشريعة</label>
+    <label class="btn" for="buka-kquran">خطة الطالب في كلية القرآن</label>
+    <label class="btn" for="buka-lughah">خطة الطالب في كلية اللغة</label>
+    <label class="btn" for="buka-ulum">خطة الطالب في كلية العلوم</label>
   </section>
   <section class="panel" id="dalil">
     <label class="btn-kembali" for="buka-dalil">Kembali</label>
@@ -111,6 +120,24 @@
     <h2 class="judul judul-kecil">خطة الطالب في كلية الشريعة</h2>
     <a class="btn" href="https://drive.google.com/uc?export=download&id=1RDyq2NpVf-yWUYNjErj8LO37lYPAcC2l" target="_blank" rel="noopener">Unduh</a>
     <iframe class="dalil-frame" title="خطة الطالب في كلية الشريعة" src="https://drive.google.com/file/d/1RDyq2NpVf-yWUYNjErj8LO37lYPAcC2l/preview" loading="lazy" allowfullscreen></iframe>
+  </section>
+  <section class="panel" id="kquran">
+    <label class="btn-kembali" for="buka-kquran">Kembali</label>
+    <h2 class="judul judul-kecil">خطة الطالب في كلية القرآن</h2>
+    <a class="btn" href="https://drive.google.com/uc?export=download&id=1ircxr_BT104TMP_vqiSai6CZYReNjeEZ" target="_blank" rel="noopener">Unduh</a>
+    <iframe class="dalil-frame" title="خطة الطالب في كلية القرآن" src="https://drive.google.com/file/d/1ircxr_BT104TMP_vqiSai6CZYReNjeEZ/preview" loading="lazy" allowfullscreen></iframe>
+  </section>
+  <section class="panel" id="lughah">
+    <label class="btn-kembali" for="buka-lughah">Kembali</label>
+    <h2 class="judul judul-kecil">خطة الطالب في كلية اللغة</h2>
+    <a class="btn" href="https://drive.google.com/uc?export=download&id=1baVYpYAjsioSWWQxZWtGafIqrBCqaO1d" target="_blank" rel="noopener">Unduh</a>
+    <iframe class="dalil-frame" title="خطة الطالب في كلية اللغة" src="https://drive.google.com/file/d/1baVYpYAjsioSWWQxZWtGafIqrBCqaO1d/preview" loading="lazy" allowfullscreen></iframe>
+  </section>
+  <section class="panel" id="ulum">
+    <label class="btn-kembali" for="buka-ulum">Kembali</label>
+    <h2 class="judul judul-kecil">خطة الطالب في كلية العلوم</h2>
+    <a class="btn" href="https://drive.google.com/uc?export=download&id=1zlwRHFsr4fp9ka7d15SD-GtX8omPpF1j" target="_blank" rel="noopener">Unduh</a>
+    <iframe class="dalil-frame" title="خطة الطالب في كلية العلوم" src="https://drive.google.com/file/d/1zlwRHFsr4fp9ka7d15SD-GtX8omPpF1j/preview" loading="lazy" allowfullscreen></iframe>
   </section>
 </main>
 </body>
