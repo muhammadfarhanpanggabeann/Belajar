@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelas 'Irab Mahir</title>
+<style>
+  :root {
+    --navy: #0D173B;
+    --navy-dark: #1A202C;
+    --navy-panel: #142050;
+    --teal: #4AB7E0;
+    --coral: #ED8936;
+    --line: rgba(74, 183, 224, .28);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--navy); }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%) fixed;
+    font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  }
+  .wrap { width: min(1120px, 100% - 2rem); margin-inline: auto; padding-block: 1.25rem; }
+  .panel {
+    background: var(--navy-panel);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--teal);
+    border-radius: 8px;
+    min-height: calc(100vh - 2.5rem);
+    padding: 1rem;
+  }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .back {
+    display: inline-block; padding: .6rem 1.1rem; border-radius: 8px;
+    font: 700 1.05rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: var(--teal); background: var(--navy);
+    border: 1px solid var(--teal); text-decoration: none; cursor: pointer;
+  }
+  .back:hover { background: rgba(74, 183, 224, .14); }
+  .list {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 1rem; margin-top: 1rem;
+  }
+  .btn {
+    display: block; width: min(100%, 15rem); text-align: center;
+    padding: .9rem 1.25rem; border-radius: 6px; cursor: pointer;
+    font: 700 1.1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    background: var(--coral); color: var(--navy-dark); text-decoration: none;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+
+  .video {
+    width: min(100%, 56rem); margin: 1rem auto 0;
+    aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--line); background: #000;
+  }
+  .video iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .terakhir {
+    width: min(100%, 56rem); margin: .75rem auto 0; text-align: center;
+    font: 600 .95rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: var(--teal);
+  }
+
+  /* Pengganti halaman: tanpa JavaScript dan tanpa pindah alamat */
+  .sw { position: absolute; opacity: 0; pointer-events: none; }
+  #p1 { display: none; }
+  #v-p1:checked ~ .wrap #p1 { display: block; }
+  #v-p1:checked ~ .wrap #daftar { display: none; }
+</style>
+</head>
+<body>
+
+<input class="sw" type="radio" name="halaman" id="v-daftar" checked tabindex="-1">
+<input class="sw" type="radio" name="halaman" id="v-p1" tabindex="-1">
+
+<main class="wrap">
+
+  <!-- Panel daftar pertemuan -->
+  <section class="panel" id="daftar">
+    <div class="top">
+      <a class="back" href="index.html">Kembali</a>
+    </div>
+    <div class="list">
+      <label class="btn" for="v-p1" role="button" tabindex="0">Pertemuan ke 1</label>
+    </div>
+  </section>
+
+  <!-- Panel kosong Pertemuan ke 1 -->
+  <section class="panel" id="p1">
+    <div class="top">
+      <label class="back" for="v-daftar" role="button" tabindex="0">Kembali</label>
+    </div>
+    <div class="video">
+      <iframe id="video-p1"
+        src="https://www.youtube.com/embed/zN5DUap70bo?playsinline=1&rel=0&modestbranding=1&fs=1&enablejsapi=1"
+        title="Video Pertemuan ke 1"
+        loading="lazy"
+        sandbox="allow-scripts allow-same-origin allow-presentation"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
+    <p class="terakhir" id="terakhir">Belum pernah ditonton</p>
+  </section>
+
+</main>
+
+<script>
+  // Tambahan: tombol bisa ditekan dengan keyboard (Enter / Spasi)
+  document.querySelectorAll('label[role="button"]').forEach(function (el) {
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    });
+  });
+
+  // ---- Menit terakhir ditonton ----
+  var KUNCI = 'irab-mahir-p1-waktu';
+  var iframe = document.getElementById('video-p1');
+  var label = document.getElementById('terakhir');
+  var player = null, timer = null;
+
+  function baca() {
+    try { return parseFloat(localStorage.getItem(KUNCI)) || 0; } catch (e) { return 0; }
+  }
+  function simpan(t) {
+    try { localStorage.setItem(KUNCI, String(Math.floor(t))); } catch (e) {}
+  }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function format(d) {
+    d = Math.floor(d);
+    var j = Math.floor(d / 3600), m = Math.floor((d % 3600) / 60), s = d % 60;
+    return j ? j + ':' + pad(m) + ':' + pad(s) : m + ':' + pad(s);
+  }
+  function tampilkan(t) {
+    label.textContent = t > 0 ? 'Terakhir ditonton: menit ' + format(t) : 'Belum pernah ditonton';
+  }
+  function catat() {
+    if (!player || typeof player.getCurrentTime !== 'function') return;
+    var t = player.getCurrentTime();
+    if (t > 0) { simpan(t); tampilkan(t); }
+  }
+
+  // Lanjutkan dari menit terakhir
+  var awal = baca();
+  if (awal > 5) {
+    iframe.src = iframe.src + '&start=' + Math.floor(awal - 2);
+  }
+  tampilkan(awal);
+
+  // Pemutar YouTube (untuk membaca posisi video)
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player('video-p1', {
+      events: {
+        onStateChange: function (e) {
+          if (e.data === 1) {                       // sedang diputar
+            clearInterval(timer);
+            timer = setInterval(catat, 5000);
+          } else {
+            clearInterval(timer);
+            if (e.data === 0) { simpan(0); tampilkan(0); }   // selesai
+            else { catat(); }                                // jeda
+          }
+        }
+      }
+    });
+  };
+  var api = document.createElement('script');
+  api.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(api);
+
+  // Simpan posisi saat aplikasi ditutup atau pindah ke latar belakang
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') catat();
+  });
+  window.addEventListener('pagehide', catat);
+
+  // Saat kembali ke daftar: simpan posisi, lalu jeda video
+  document.querySelector('label[for="v-daftar"]').addEventListener('click', function () {
+    catat();
+    if (player && typeof player.pauseVideo === 'function') player.pauseVideo();
+  });
+</script>
+</body>
+</html>
