@@ -12,133 +12,241 @@
     --teal: #4AB7E0;
     --coral: #ED8936;
     --line: rgba(74, 183, 224, .28);
+    --ui: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --ar: "Segoe UI", "Geeza Pro", system-ui, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; }
   html { background: var(--navy); }
-  body {
-    min-height: 100vh;
-    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%) fixed;
-  }
-  .wrap { width: min(1120px, 100% - 2rem); margin-inline: auto; padding-block: 1.25rem; }
-  .panel {
-    background: var(--navy-panel);
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--teal);
-    border-radius: 8px;
-    min-height: calc(100vh - 2.5rem); padding: 1rem;
-    display: flex; flex-direction: column; align-items: center; gap: 1rem;
-  }
-  .btn-kembali {
-    align-self: flex-end; /* halaman RTL: flex-end = kiri */
-    display: inline-block; padding: .5rem 1rem; border-radius: 6px;
-    border: 1px solid var(--teal); color: var(--teal); text-decoration: none;
-    font: 600 .95rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
-  }
-  .btn-kembali:hover { background: rgba(74, 183, 224, .12); }
-  .btn {
-    display: inline-block; padding: .65rem 1.25rem; border-radius: 6px;
-    font: 600 1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
-    background: var(--coral); color: var(--navy-dark); text-decoration: none;
-  }
-  .btn:hover { filter: brightness(1.08); }
-  .judul { color: var(--teal); font: 700 1.75rem/1.5 "Segoe UI", "Geeza Pro", system-ui, sans-serif; text-align: center; }
-  .judul-kecil { font-size: 1.3rem; }
-  label.btn, label.btn-kembali { cursor: pointer; }
-  .toggle { position: absolute; opacity: 0; pointer-events: none; }
-  #dalil, #tausif, #quran, #hasub, #dawah, #syariah, #kquran, #lughah, #ulum { display: none; }
-  .toggle:checked ~ #khutat { display: none; }
-  #buka-dalil:checked ~ #dalil { display: flex; }
-  #buka-tausif:checked ~ #tausif { display: flex; }
-  #buka-quran:checked ~ #quran { display: flex; }
-  #buka-hasub:checked ~ #hasub { display: flex; }
-  #buka-dawah:checked ~ #dawah { display: flex; }
-  #buka-syariah:checked ~ #syariah { display: flex; }
-  #buka-kquran:checked ~ #kquran { display: flex; }
-  #buka-lughah:checked ~ #lughah { display: flex; }
-  #buka-ulum:checked ~ #ulum { display: flex; }
-  .dalil-frame { width: 100%; flex: 1; min-height: 75vh; border: 0; border-radius: 6px; background: #fff; }
-  .toggle:focus-visible ~ .panel label { outline: 3px solid var(--teal); outline-offset: 3px; }
+  body { min-height: 100vh; background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%) fixed; color: #e8eefc; font-family: var(--ui); }
   :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+
+  /* Menu */
+  .wrap { width: min(760px, 100% - 2rem); margin-inline: auto; padding-block: 1.25rem 2.5rem; }
+  .back-link { display: inline-block; padding: .45rem 1rem; border: 1px solid var(--teal); border-radius: 6px; color: var(--teal); text-decoration: none; font: 600 .95rem/1.4 var(--ui); }
+  .back-link:hover { background: rgba(74,183,224,.12); }
+  h1 { color: var(--teal); font: 700 1.9rem/1.5 var(--ar); text-align: center; margin: 1.25rem 0 1.5rem; }
+  .list { display: grid; gap: .65rem; }
+  .item {
+    width: 100%; text-align: start; cursor: pointer;
+    background: var(--navy-panel); color: #fff; border: 1px solid var(--line); border-inline-start: 3px solid var(--coral);
+    border-radius: 8px; padding: .95rem 1.1rem; font: 600 1.05rem/1.6 var(--ar);
+    transition: background .15s, transform .15s;
+  }
+  .item:hover { background: #1a2a63; transform: translateY(-1px); }
+
+  /* Viewer */
+  #viewer { position: fixed; inset: 0; z-index: 10; display: none; flex-direction: column; background: var(--navy-dark); }
+  #viewer.on { display: flex; }
+  .bar { display: flex; align-items: center; gap: .6rem; padding: .55rem .75rem; background: var(--navy); border-bottom: 1px solid var(--line); direction: ltr; }
+  .bar .ttl { flex: 1; min-width: 0; color: var(--teal); font: 700 .95rem/1.4 var(--ar); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; direction: rtl; text-align: center; }
+  .btn { display: inline-block; padding: .4rem .85rem; border-radius: 6px; border: 1px solid var(--teal); background: none; color: var(--teal); font: 600 .85rem/1.4 var(--ui); text-decoration: none; cursor: pointer; white-space: nowrap; }
+  .btn:hover { background: rgba(74,183,224,.12); }
+  .btn.solid { background: var(--coral); border-color: var(--coral); color: var(--navy-dark); }
+  .btn.solid:hover { filter: brightness(1.08); background: var(--coral); }
+  #pg { color: #9fb3d9; font: 600 .85rem/1 var(--ui); min-width: 4.2rem; text-align: center; }
+  #stage { flex: 1; min-height: 0; display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  .slot { flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; overflow: auto; padding: .75rem; display: flex; align-items: flex-start; }
+  .slot canvas { flex: none; width: var(--cw, 100%); height: auto; margin-inline: auto; background: #fff; border-radius: 4px; box-shadow: 0 6px 24px rgba(0,0,0,.35); }
+  .zoom { display: flex; align-items: center; gap: .25rem; }
+  .zoom .btn { padding: .4rem .65rem; min-width: 2.1rem; text-align: center; }
+  #zv { color: #9fb3d9; font: 600 .8rem/1 var(--ui); min-width: 2.7rem; text-align: center; }
+  @media (max-width: 560px) { .bar { flex-wrap: wrap; } .bar .ttl { order: 5; flex-basis: 100%; } }
+  .msg { margin: auto; padding: 1rem; color: #9fb3d9; font: 500 .95rem/1.6 var(--ui); text-align: center; direction: ltr; }
+  #fallback { flex: 1; display: none; flex-direction: column; min-height: 0; }
+  #fallback p { padding: .5rem .75rem; color: #9fb3d9; font: 500 .8rem/1.5 var(--ui); text-align: center; direction: ltr; }
+  #fallback iframe { flex: 1; width: 100%; border: 0; background: #fff; }
 </style>
 </head>
 <body>
 <main class="wrap">
-  <input type="checkbox" id="buka-dalil" class="toggle" aria-label="الدليل التعريفي لبرنامج بكالوريوس الشريعة">
-  <input type="checkbox" id="buka-tausif" class="toggle" aria-label="توصيف برنامج بكالوريوس الأنظمة - النموذج الجديد 2023">
-  <input type="checkbox" id="buka-quran" class="toggle" aria-label="توصيف برنامج بكالوريوس القرآن الكريم والدراسات الإسلامية-1446هـ">
-  <input type="checkbox" id="buka-hasub" class="toggle" aria-label="خطة الطالب في كلية الحاسوب">
-  <input type="checkbox" id="buka-dawah" class="toggle" aria-label="خطة الطالب في كلية الدعوة">
-  <input type="checkbox" id="buka-syariah" class="toggle" aria-label="خطة الطالب في كلية الشريعة">
-  <input type="checkbox" id="buka-kquran" class="toggle" aria-label="خطة الطالب في كلية القرآن">
-  <input type="checkbox" id="buka-lughah" class="toggle" aria-label="خطة الطالب في كلية اللغة">
-  <input type="checkbox" id="buka-ulum" class="toggle" aria-label="خطة الطالب في كلية العلوم">
-  <section class="panel" id="khutat">
-    <a class="btn-kembali" href="../">Kembali</a>
-    <h1 class="judul">خطط الكليات</h1>
-    <label class="btn" for="buka-dalil">الدليل التعريفي لبرنامج بكالوريوس الشريعة</label>
-    <label class="btn" for="buka-tausif">توصيف برنامج بكالوريوس الأنظمة - النموذج الجديد 2023</label>
-    <label class="btn" for="buka-quran">توصيف برنامج بكالوريوس القرآن الكريم والدراسات الإسلامية-1446هـ</label>
-    <label class="btn" for="buka-hasub">خطة الطالب في كلية الحاسوب</label>
-    <label class="btn" for="buka-dawah">خطة الطالب في كلية الدعوة</label>
-    <label class="btn" for="buka-syariah">خطة الطالب في كلية الشريعة</label>
-    <label class="btn" for="buka-kquran">خطة الطالب في كلية القرآن</label>
-    <label class="btn" for="buka-lughah">خطة الطالب في كلية اللغة</label>
-    <label class="btn" for="buka-ulum">خطة الطالب في كلية العلوم</label>
-  </section>
-  <section class="panel" id="dalil">
-    <label class="btn-kembali" for="buka-dalil">Kembali</label>
-    <h2 class="judul judul-kecil">الدليل التعريفي لبرنامج بكالوريوس الشريعة</h2>
-    <a class="btn" href="https://drive.google.com/uc?export=download&id=1lIAg9mm08QgSR4QfmjUYTMCf4r2GcYCh" target="_blank" rel="noopener">Unduh</a>
-    <iframe class="dalil-frame" title="الدليل التعريفي لبرنامج بكالوريوس الشريعة" src="https://drive.google.com/file/d/1lIAg9mm08QgSR4QfmjUYTMCf4r2GcYCh/preview" loading="lazy" allowfullscreen></iframe>
-  </section>
-  <section class="panel" id="tausif">
-    <label class="btn-kembali" for="buka-tausif">Kembali</label>
-    <h2 class="judul judul-kecil">توصيف برنامج بكالوريوس الأنظمة - النموذج الجديد 2023</h2>
-    <a class="btn" href="https://drive.google.com/uc?export=download&id=1Z2FoHkRp5W2AW6yt5-sfrcIgeYYYGFlX" target="_blank" rel="noopener">Unduh</a>
-    <iframe class="dalil-frame" title="توصيف برنامج بكالوريوس الأنظمة - النموذج الجديد 2023" src="https://drive.google.com/file/d/1Z2FoHkRp5W2AW6yt5-sfrcIgeYYYGFlX/preview" loading="lazy" allowfullscreen></iframe>
-  </section>
-  <section class="panel" id="quran">
-    <label class="btn-kembali" for="buka-quran">Kembali</label>
-    <h2 class="judul judul-kecil">توصيف برنامج بكالوريوس القرآن الكريم والدراسات الإسلامية-1446هـ</h2>
-    <a class="btn" href="https://drive.google.com/uc?export=download&id=1MkHX1Tzqidbi8-JzehlnGZNb2PzY1Goi" target="_blank" rel="noopener">Unduh</a>
-    <iframe class="dalil-frame" title="توصيف برنامج بكالوريوس القرآن الكريم والدراسات الإسلامية-1446هـ" src="https://drive.google.com/file/d/1MkHX1Tzqidbi8-JzehlnGZNb2PzY1Goi/preview" loading="lazy" allowfullscreen></iframe>
-  </section>
-  <section class="panel" id="hasub">
-    <label class="btn-kembali" for="buka-hasub">Kembali</label>
-    <h2 class="judul judul-kecil">خطة الطالب في كلية الحاسوب</h2>
-    <a class="btn" href="https://drive.google.com/uc?export=download&id=1pLqKSoKnNi2iqRD_mXzaGtCY_Ru7qGv4" target="_blank" rel="noopener">Unduh</a>
-    <iframe class="dalil-frame" title="خطة الطالب في كلية الحاسوب" src="https://drive.google.com/file/d/1pLqKSoKnNi2iqRD_mXzaGtCY_Ru7qGv4/preview" loading="lazy" allowfullscreen></iframe>
-  </section>
-  <section class="panel" id="dawah">
-    <label class="btn-kembali" for="buka-dawah">Kembali</label>
-    <h2 class="judul judul-kecil">خطة الطالب في كلية الدعوة</h2>
-    <a class="btn" href="https://drive.google.com/uc?export=download&id=1wRougAcyfTttN4hVYNm4Q5Tb43czvN1x" target="_blank" rel="noopener">Unduh</a>
-    <iframe class="dalil-frame" title="خطة الطالب في كلية الدعوة" src="https://drive.google.com/file/d/1wRougAcyfTttN4hVYNm4Q5Tb43czvN1x/preview" loading="lazy" allowfullscreen></iframe>
-  </section>
-  <section class="panel" id="syariah">
-    <label class="btn-kembali" for="buka-syariah">Kembali</label>
-    <h2 class="judul judul-kecil">خطة الطالب في كلية الشريعة</h2>
-    <a class="btn" href="https://drive.google.com/uc?export=download&id=1RDyq2NpVf-yWUYNjErj8LO37lYPAcC2l" target="_blank" rel="noopener">Unduh</a>
-    <iframe class="dalil-frame" title="خطة الطالب في كلية الشريعة" src="https://drive.google.com/file/d/1RDyq2NpVf-yWUYNjErj8LO37lYPAcC2l/preview" loading="lazy" allowfullscreen></iframe>
-  </section>
-  <section class="panel" id="kquran">
-    <label class="btn-kembali" for="buka-kquran">Kembali</label>
-    <h2 class="judul judul-kecil">خطة الطالب في كلية القرآن</h2>
-    <a class="btn" href="https://drive.google.com/uc?export=download&id=1ircxr_BT104TMP_vqiSai6CZYReNjeEZ" target="_blank" rel="noopener">Unduh</a>
-    <iframe class="dalil-frame" title="خطة الطالب في كلية القرآن" src="https://drive.google.com/file/d/1ircxr_BT104TMP_vqiSai6CZYReNjeEZ/preview" loading="lazy" allowfullscreen></iframe>
-  </section>
-  <section class="panel" id="lughah">
-    <label class="btn-kembali" for="buka-lughah">Kembali</label>
-    <h2 class="judul judul-kecil">خطة الطالب في كلية اللغة</h2>
-    <a class="btn" href="https://drive.google.com/uc?export=download&id=1baVYpYAjsioSWWQxZWtGafIqrBCqaO1d" target="_blank" rel="noopener">Unduh</a>
-    <iframe class="dalil-frame" title="خطة الطالب في كلية اللغة" src="https://drive.google.com/file/d/1baVYpYAjsioSWWQxZWtGafIqrBCqaO1d/preview" loading="lazy" allowfullscreen></iframe>
-  </section>
-  <section class="panel" id="ulum">
-    <label class="btn-kembali" for="buka-ulum">Kembali</label>
-    <h2 class="judul judul-kecil">خطة الطالب في كلية العلوم</h2>
-    <a class="btn" href="https://drive.google.com/uc?export=download&id=1zlwRHFsr4fp9ka7d15SD-GtX8omPpF1j" target="_blank" rel="noopener">Unduh</a>
-    <iframe class="dalil-frame" title="خطة الطالب في كلية العلوم" src="https://drive.google.com/file/d/1zlwRHFsr4fp9ka7d15SD-GtX8omPpF1j/preview" loading="lazy" allowfullscreen></iframe>
-  </section>
+  <a class="back-link" href="../">Kembali</a>
+  <h1>خطط الكليات</h1>
+  <div class="list" id="list"></div>
 </main>
+
+<div id="viewer" role="dialog" aria-modal="true" aria-label="Penampil dokumen">
+  <div class="bar">
+    <button class="btn" id="back" type="button">Kembali</button>
+    <div class="ttl" id="vt"></div>
+    <span id="pg" aria-live="polite"></span>
+    <div class="zoom" id="zoom"><button class="btn" id="zo" type="button" aria-label="Perkecil">−</button><span id="zv">100%</span><button class="btn" id="zi" type="button" aria-label="Perbesar">+</button></div>
+    <button class="btn" id="dir" type="button" title="Ubah arah geser"></button>
+    <a class="btn solid" id="dl" target="_blank" rel="noopener">Unduh</a>
+  </div>
+  <div id="stage" dir="rtl" tabindex="0"></div>
+  <div id="fallback"><p>Pratinjau sederhana dari Google Drive (arah geser tidak tersedia).</p><iframe id="fbf" allowfullscreen></iframe></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+const DOCS = [
+ {
+  "id": "dalil",
+  "t": "الدليل التعريفي لبرنامج بكالوريوس الشريعة",
+  "drive": "1lIAg9mm08QgSR4QfmjUYTMCf4r2GcYCh"
+ },
+ {
+  "id": "tausif",
+  "t": "توصيف برنامج بكالوريوس الأنظمة - النموذج الجديد 2023",
+  "drive": "1Z2FoHkRp5W2AW6yt5-sfrcIgeYYYGFlX"
+ },
+ {
+  "id": "quran",
+  "t": "توصيف برنامج بكالوريوس القرآن الكريم والدراسات الإسلامية-1446هـ",
+  "drive": "1MkHX1Tzqidbi8-JzehlnGZNb2PzY1Goi"
+ },
+ {
+  "id": "hasub",
+  "t": "خطة الطالب في كلية الحاسوب",
+  "drive": "1pLqKSoKnNi2iqRD_mXzaGtCY_Ru7qGv4"
+ },
+ {
+  "id": "dawah",
+  "t": "خطة الطالب في كلية الدعوة",
+  "drive": "1wRougAcyfTttN4hVYNm4Q5Tb43czvN1x"
+ },
+ {
+  "id": "syariah",
+  "t": "خطة الطالب في كلية الشريعة",
+  "drive": "1RDyq2NpVf-yWUYNjErj8LO37lYPAcC2l"
+ },
+ {
+  "id": "kquran",
+  "t": "خطة الطالب في كلية القرآن",
+  "drive": "1ircxr_BT104TMP_vqiSai6CZYReNjeEZ"
+ },
+ {
+  "id": "lughah",
+  "t": "خطة الطالب في كلية اللغة",
+  "drive": "1baVYpYAjsioSWWQxZWtGafIqrBCqaO1d"
+ },
+ {
+  "id": "ulum",
+  "t": "خطة الطالب في كلية العلوم",
+  "drive": "1zlwRHFsr4fp9ka7d15SD-GtX8omPpF1j"
+ }
+];
+
+// Untuk tampilan halaman penuh, taruh PDF di folder pdf/ dengan nama <id>.pdf (mis. pdf/dalil.pdf).
+// Jika tidak ada, aplikasi mencoba mengambil dari Google Drive, lalu jatuh ke pratinjau Drive.
+const $ = id => document.getElementById(id);
+const viewer = $('viewer'), stage = $('stage'), pg = $('pg'), dirBtn = $('dir');
+let session = 0, slots = [], observer = null, pdfDoc = null, baseW = 1, zoom = 1;
+
+if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+DOCS.forEach(d => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'item'; b.textContent = d.t;
+  b.onclick = () => openDoc(d);
+  $('list').appendChild(b);
+});
+
+let dir = 'rtl';
+try { dir = localStorage.getItem('khutat-dir') === 'ltr' ? 'ltr' : 'rtl'; } catch (e) {}
+function applyDir(keep) {
+  const idx = keep ? current() : 0;
+  stage.dir = dir;
+  dirBtn.textContent = dir === 'rtl' ? 'Berikutnya: ←' : 'Berikutnya: →';
+  if (keep && slots[idx]) requestAnimationFrame(() => slots[idx].scrollIntoView({ inline: 'start', block: 'nearest', behavior: 'instant' }));
+}
+dirBtn.onclick = () => {
+  dir = dir === 'rtl' ? 'ltr' : 'rtl';
+  try { localStorage.setItem('khutat-dir', dir); } catch (e) {}
+  applyDir(true);
+};
+function cw() { return Math.min(stage.clientWidth - 24, 920) * zoom; }
+function setZoom(z, redraw) {
+  zoom = Math.max(1, Math.min(3, Math.round(z * 4) / 4));
+  $('zv').textContent = Math.round(zoom * 100) + '%';
+  stage.style.setProperty('--cw', cw() + 'px');
+  if (!redraw || !slots.length) return;
+  clearTimeout(setZoom.t);
+  setZoom.t = setTimeout(() => {
+    const my = session, i = current();
+    slots.forEach(sl => delete sl.dataset.done);
+    [i, i - 1, i + 1].forEach(k => slots[k] && draw(slots[k], my));
+  }, 200);
+}
+$('zi').onclick = () => setZoom(zoom + 0.25, true);
+$('zo').onclick = () => setZoom(zoom - 0.25, true);
+$('zv').onclick = () => setZoom(1, true);
+window.addEventListener('resize', () => { if (slots.length) setZoom(zoom, true); });
+function current() { return Math.max(0, Math.min(slots.length - 1, Math.round(Math.abs(stage.scrollLeft) / (stage.clientWidth || 1)))); }
+stage.addEventListener('scroll', () => { if (slots.length) pg.textContent = (current() + 1) + ' / ' + slots.length; }, { passive: true });
+document.addEventListener('keydown', e => {
+  if (!viewer.classList.contains('on')) return;
+  if (e.key === 'Escape') closeDoc();
+  if (e.key === '+' || e.key === '=') setZoom(zoom + 0.25, true);
+  if (e.key === '-') setZoom(zoom - 0.25, true);
+  if (e.key === 'ArrowLeft') stage.scrollBy({ left: -stage.clientWidth, behavior: 'smooth' });
+  if (e.key === 'ArrowRight') stage.scrollBy({ left: stage.clientWidth, behavior: 'smooth' });
+});
+
+async function loadPdf(d) {
+  if (!window.pdfjsLib) return null;
+  const srcs = ['pdf/' + d.id + '.pdf', 'https://drive.usercontent.google.com/download?id=' + d.drive + '&export=download&confirm=t'];
+  for (const u of srcs) { try { return await pdfjsLib.getDocument(u).promise; } catch (e) {} }
+  return null;
+}
+
+async function openDoc(d) {
+  const my = ++session;
+  $('vt').textContent = d.t;
+  $('dl').href = 'https://drive.google.com/uc?export=download&id=' + d.drive;
+  viewer.classList.add('on'); document.body.style.overflow = 'hidden';
+  $('fallback').style.display = 'none'; $('fbf').src = 'about:blank';
+  stage.style.display = 'flex'; pg.textContent = ''; dirBtn.style.display = ''; $('zoom').style.display = ''; setZoom(1, false);
+  stage.innerHTML = '<div class="msg">Memuat…</div>';
+  slots = []; if (observer) observer.disconnect();
+  const doc = await loadPdf(d);
+  if (my !== session) return;
+  if (!doc) {
+    stage.style.display = 'none'; dirBtn.style.display = 'none'; $('zoom').style.display = 'none';
+    $('fallback').style.display = 'flex';
+    $('fbf').src = 'https://drive.google.com/file/d/' + d.drive + '/preview';
+    return;
+  }
+  pdfDoc = doc;
+  const p1 = await doc.getPage(1);
+  const v1 = p1.getViewport({ scale: 1 });
+  baseW = v1.width;
+  stage.innerHTML = '';
+  observer = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) draw(en.target, my); }), { root: stage, rootMargin: '0px 100% 0px 100%' });
+  for (let i = 1; i <= doc.numPages; i++) {
+    const s = document.createElement('div'); s.className = 'slot'; s.dataset.p = i;
+    const c = document.createElement('canvas'); c.style.aspectRatio = v1.width + ' / ' + v1.height;
+    s.appendChild(c); stage.appendChild(s); slots.push(s); observer.observe(s);
+  }
+  applyDir(false);
+  stage.scrollLeft = 0;
+  pg.textContent = '1 / ' + doc.numPages;
+  stage.focus({ preventScroll: true });
+}
+
+async function draw(slot, my) {
+  if (slot.dataset.done) return;
+  slot.dataset.done = '1';
+  try {
+    const page = await pdfDoc.getPage(+slot.dataset.p);
+    if (my !== session) return;
+    const c = slot.firstChild;
+    const v0 = page.getViewport({ scale: 1 });
+    let scale = (cw() / v0.width) * Math.min(window.devicePixelRatio || 1, 2);
+    scale = Math.min(scale, Math.sqrt(12e6 / (v0.width * v0.height)));
+    const vp = page.getViewport({ scale });
+    c.width = vp.width; c.height = vp.height; c.style.aspectRatio = '';
+    await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+  } catch (e) { delete slot.dataset.done; }
+}
+
+function closeDoc() {
+  session++; viewer.classList.remove('on'); document.body.style.overflow = '';
+  if (observer) observer.disconnect();
+  stage.innerHTML = ''; slots = []; $('fbf').src = 'about:blank';
+}
+$('back').onclick = closeDoc;
+applyDir(false);
+</script>
 </body>
 </html>
