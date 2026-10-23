@@ -50,6 +50,13 @@
   .btn:hover { filter: brightness(1.08); }
   :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
 
+  .video {
+    width: min(100%, 56rem); margin: 1rem auto 0;
+    aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--line); background: #000;
+  }
+  .video iframe { width: 100%; height: 100%; border: 0; display: block; }
+
   /* Pengganti halaman: tanpa JavaScript dan tanpa pindah alamat */
   .sw { position: absolute; opacity: 0; pointer-events: none; }
   #p1 { display: none; }
@@ -79,6 +86,16 @@
     <div class="top">
       <label class="back" for="v-daftar" role="button" tabindex="0">Kembali</label>
     </div>
+    <div class="video">
+      <iframe id="video-p1"
+        src="https://www.youtube.com/embed/zN5DUap70bo?playsinline=1&rel=0&modestbranding=1&fs=1"
+        title="Video Pertemuan ke 1"
+        loading="lazy"
+        sandbox="allow-scripts allow-same-origin allow-presentation"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
   </section>
 
 </main>
@@ -89,6 +106,12 @@
     el.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
     });
+  });
+
+  // Saat kembali ke daftar, hentikan video agar suaranya tidak tetap berjalan
+  document.querySelector('label[for="v-daftar"]').addEventListener('click', function () {
+    var v = document.getElementById('video-p1');
+    v.src = v.src;
   });
 </script>
 </body>
