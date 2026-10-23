@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>معهد تعليم اللغة العربية لغير الناطقين بها</title>
+<style>
+  :root {
+    --navy: #0D173B;
+    --navy-dark: #1A202C;
+    --navy-panel: #142050;
+    --teal: #4AB7E0;
+    --coral: #ED8936;
+    --text: #E8EEF8;
+    --line: rgba(74, 183, 224, .28);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--navy); }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%) fixed;
+    color: var(--text);
+  }
+  .wrap { width: min(1120px, 100% - 2rem); margin-inline: auto; padding-block: 1.25rem; }
+  .panel {
+    background: var(--navy-panel);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--teal);
+    border-radius: 8px;
+    min-height: calc(100vh - 2.5rem); padding: 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  }
+  .btn-kembali {
+    align-self: flex-end; /* halaman RTL: flex-end = kiri */
+    display: inline-block; padding: .5rem 1rem; border-radius: 6px;
+    border: 1px solid var(--teal); color: var(--teal); text-decoration: none;
+    font: 600 .95rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  }
+  .btn-kembali:hover { background: rgba(74, 183, 224, .12); }
+  h1 {
+    color: var(--teal);
+    font: 700 clamp(1.5rem, 4vw, 2.25rem)/1.5 "Segoe UI", Tahoma, system-ui, sans-serif;
+    text-align: center;
+  }
+  .btn {
+    display: inline-block; padding: .65rem 1.25rem; border-radius: 6px;
+    font: 600 1rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    background: var(--coral); color: var(--navy-dark); text-decoration: none;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="panel">
+    <a class="btn-kembali" href="../">Kembali</a>
+    <h1>معهد تعليم اللغة العربية لغير الناطقين بها</h1>
+    <a class="btn" href="https://drive.google.com/drive/folders/1a-FlPd4pGfQ2H9juwLIk16jXdj9T2VuB" target="_blank" rel="noopener">مستوى الأول</a>
+    <a class="btn" href="https://drive.google.com/drive/folders/1q2fgifM4t187hzRcCS-F30LC5G_CIe6W" target="_blank" rel="noopener">مستوى الثاني</a>
+    <a class="btn" href="https://drive.google.com/drive/folders/1hVte6Hyz79VeAKd8-9Z0ELspguwBz8FV" target="_blank" rel="noopener">مستوى الثالث</a>
+    <a class="btn" href="https://drive.google.com/drive/folders/1KpUTEBCh4Nq6uZO8iLnP3CpnBzjcqK42" target="_blank" rel="noopener">مستوى الرابع</a>
+  </section>
+</main>
+</body>
+</html>
