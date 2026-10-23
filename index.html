@@ -31,12 +31,16 @@
     font: 600 1.15rem/1.4 "Avenir Next", "Segoe UI", system-ui, sans-serif;
     background: var(--coral); color: var(--navy-dark); text-decoration: none;
   }
+  .menu { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1rem; }
   .btn:hover { filter: brightness(1.08); }
   :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
 </style>
 </head>
 <body>
-  <a class="btn" href="bahasa-arab/">Bahasa Arab</a>
+  <nav class="menu">
+    <a class="btn" href="bahasa-arab/">Bahasa Arab</a>
+    <a class="btn" href="الجامعة%20الإسلامية%20بالمدينة%20المنورة.html">الجامعة الإسلامية بالمدينة المنورة</a>
+  </nav>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
